@@ -1,0 +1,285 @@
+:root{
+  --cyan-1: #4DC5FF;
+  --cyan-2: #4BC0F9;
+  --cyan-3: #3EA1D1;
+
+  --orange-a: rgba(255, 196.45, 167.18, 0.37);
+  --orange-b: rgba(237.06, 81.51, 3.73, 0.37);
+
+  --ink: #000;
+  --bg: #fff;
+
+  --btn-bg: rgba(77, 197, 255, 0.30);
+  --btn-outline: #3EA1D1;
+  --btn-hover: rgba(255, 136.33, 77, 0.37);
+
+  --radius: 5px;
+  --shadow-soft: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body{
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* =========================
+   Page wrapper
+   ========================= */
+.page{
+  width: 100%;
+  height: 8524px;            /* preserves your fixed artboard style */
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* =========================
+   Gradient bars
+   ========================= */
+.gradient-top{
+  width: 100%;
+  height: 469px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 1px;
+  opacity: 0.75;
+
+  /* Keep your 4-corner gradient technique */
+  background:
+    linear-gradient(to bottom right, var(--cyan-1) 0%, var(--cyan-2) 29%, var(--cyan-3) 50%) bottom right / 50% 50% no-repeat,
+    linear-gradient(to bottom left,  var(--cyan-1) 0%, var(--cyan-2) 29%, var(--cyan-3) 50%) bottom left  / 50% 50% no-repeat,
+    linear-gradient(to top left,     var(--cyan-1) 0%, var(--cyan-2) 29%, var(--cyan-3) 50%) top left     / 50% 50% no-repeat,
+    linear-gradient(to top right,    var(--cyan-1) 0%, var(--cyan-2) 29%, var(--cyan-3) 50%) top right    / 50% 50% no-repeat;
+}
+
+.gradient-bottom{
+  width: 100%;
+  height: 165px;
+  position: absolute;
+  left: 0;
+  top: 8359px;
+  opacity: 0.75;
+
+  background:
+    linear-gradient(to bottom right, var(--orange-a) 0%, var(--orange-b) 50%) bottom right / 50% 50% no-repeat,
+    linear-gradient(to bottom left,  var(--orange-a) 0%, var(--orange-b) 50%) bottom left  / 50% 50% no-repeat,
+    linear-gradient(to top left,     var(--orange-a) 0%, var(--orange-b) 50%) top left     / 50% 50% no-repeat,
+    linear-gradient(to top right,    var(--orange-a) 0%, var(--orange-b) 50%) top right    / 50% 50% no-repeat;
+}
+
+/* =========================
+   Centering helpers for absolute items
+   ========================= */
+.abs-center-x{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.abs{
+  position: absolute;
+}
+
+/* =========================
+   Titles / text blocks
+   ========================= */
+.title-main{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 71px;
+
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+
+  font-family: Limelight, serif;
+  font-size: 96px;
+  font-weight: 400;
+  line-height: 144px;
+  word-wrap: break-word;
+}
+
+.section-title{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+
+  font-family: Inder, system-ui, sans-serif;
+  font-size: 96px;
+  font-weight: 400;
+  line-height: 144px;
+  word-wrap: break-word;
+}
+
+.body-copy{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 1100px;
+
+  text-align: justify;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  font-family: Jost, system-ui, sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 37.5px;
+  word-wrap: break-word;
+}
+
+/* Caption under image */
+.caption{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+
+  font-family: Jost, system-ui, sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 37.5px;
+}
+
+/* Links inside text blocks */
+.body-copy a{
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0,0,0,0.3);
+}
+.body-copy a:hover{
+  border-bottom-color: rgba(0,0,0,0.8);
+}
+
+/* =========================
+   Media elements
+   ========================= */
+.media{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+}
+
+.media-img{
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.media-iframe{
+  border: 0;
+}
+
+/* =========================
+   Nav labels: BACK / NEXT
+   ========================= */
+.nav-label{
+  position: absolute;
+  top: 8060px;
+
+  width: 267px;
+  height: 58px;
+
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  font-family: Inder, system-ui, sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 72px;
+}
+
+/* If you want them clickable later, you can style <a class="nav-label"> */
+.nav-label a{
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* =========================
+   Buttons
+   ========================= */
+.button-container{
+  width: 233px;
+  height: 239px;
+  position: absolute;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px #9747FF solid;
+  left: 624px;
+  top: 592px;
+}
+
+/* Your existing button style, made more robust */
+.button-home{
+  width: 193px;
+  height: 72px;
+  padding: 10px;
+  position: absolute;
+
+  background: var(--btn-bg);
+  border-radius: 35px;
+
+  outline: 4px solid var(--btn-outline);
+  outline-offset: -4px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  cursor: pointer;
+  user-select: none;
+
+  transition: background-color 0.25s ease, transform 0.18s ease, filter 0.25s ease;
+}
+
+.button-home:hover{
+  background: var(--btn-hover);
+  transform: translateX(var(--tx, 0)) scale(1.05);
+  filter: drop-shadow(var(--shadow-soft));
+}
+
+/* IMPORTANT:
+   Your inline styles currently include transform: translateX(...)
+   That will be overwritten by hover transform unless we preserve it.
+   Solution: use a CSS variable for horizontal translation.
+   If you DON’T want to change HTML, remove the translateX part from hover above.
+*/
+
+/* Button text */
+.button-text{
+  text-align: center;
+  color: var(--ink);
+  font-family: Jost, system-ui, sans-serif;
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 40.5px;
+  word-wrap: break-word;
+}
+
+/* Make the entire anchor behave nicely around the button */
+a.button-link{
+  position: absolute;
+  text-decoration: none;
+  color: inherit;
+}
