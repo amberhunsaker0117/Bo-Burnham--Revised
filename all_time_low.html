@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Time Low — Bo Burnham: Inside</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inder&family=Jaini:wght@400&family=Jost:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Design Tokens ── */
+    :root {
+      --blue-gradient:
+        linear-gradient(to bottom right, #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    right  / 50% 50% no-repeat;
+      --orange-gradient:
+        linear-gradient(to bottom right, rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    right  / 50% 50% no-repeat;
+
+      --font-body:    'Jost', sans-serif;
+      --font-title:   'Jaini', cursive;
+      --font-heading: 'Inder', sans-serif;
+
+      --text-sm:   0.9375rem;
+      --text-lg:   1.5625rem;
+      --text-2xl:  4rem;
+      --text-hero: clamp(2.5rem, 8vw, 5rem);
+
+      --max-w:  900px;
+      --wide-w: 1100px;
+      --pad-x:  clamp(1rem, 5vw, 2rem);
+      --gap:    clamp(1.5rem, 4vw, 2.5rem);
+
+      --btn-bg:     rgba(77, 197, 255, 0.30);
+      --btn-border: #3EA1D1;
+      --btn-hover:  rgba(255, 136, 77, 0.37);
+    }
+
+    /* ── Base ── */
+    body {
+      background: white;
+      font-family: var(--font-body);
+      font-weight: 400;
+      color: black;
+      line-height: 1.6;
+    }
+
+    /* ── Top Banner with title ── */
+    .banner-top {
+      position: relative;
+      width: 100%;
+      min-height: clamp(120px, 18vw, 315px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .banner-top::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.75;
+      background: linear-gradient(135deg, #4DC5FF 0%, #4BC0F9 40%, #3EA1D1 100%);
+      z-index: 0;
+    }
+    .banner-top .page-title,
+    .banner-top .site-title,
+    .banner-top .page-title,
+    .banner-top .banner-top__content,
+    .banner-top .title-card {
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-title {
+      font-family: var(--font-title);
+      font-size: var(--text-hero);
+      font-weight: 200;
+      text-align: center;
+      line-height: 1.25;
+      padding: clamp(1rem, 3vw, 2rem) var(--pad-x);
+    }
+
+    /* ── Bottom Banner ── */
+    .banner-bottom {
+      width: 100%;
+      height: clamp(60px, 10vw, 165px);
+      opacity: 0.75;
+      background: var(--orange-gradient);
+    }
+
+    /* ── Main content ── */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--gap);
+      padding-block: var(--gap);
+    }
+
+    /* ── Section wrappers ── */
+    .section {
+      width: 100%;
+      max-width: var(--max-w);
+      padding-inline: var(--pad-x);
+    }
+    .section--wide {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Section heading ── */
+    .section-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 6vw, var(--text-2xl));
+      font-weight: 400;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* ── Body text ── */
+    .body-text {
+      font-size: clamp(1rem, 2.5vw, var(--text-lg));
+      line-height: 1.6;
+    }
+    .body-text.justify { text-align: justify; }
+    .body-text.center  { text-align: center; }
+    .body-text p + p   { margin-top: 1.25rem; }
+
+    /* ── Caption ── */
+    .caption {
+      font-size: var(--text-sm);
+      text-align: center;
+      line-height: 1.5;
+      max-width: var(--max-w);
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── YouTube iframe ── */
+    .video-wrap {
+      width: 100%;
+      max-width: 560px;
+      padding-inline: var(--pad-x);
+      margin-inline: auto;
+    }
+    .video-wrap .ratio {
+      position: relative;
+      padding-top: 56.25%;
+    }
+    .video-wrap .ratio iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ── Lyrics poster image — intentionally very tall ── */
+    .lyrics-img {
+      width: 100%;
+      max-width: 1565px;
+      height: auto;
+      display: block;
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Knife image ── */
+    .knife-img {
+      width: 100%;
+      max-width: 718px;
+      height: auto;
+      display: block;
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Page nav ── */
+    .page-nav {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    .page-nav__row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .page-nav__col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .page-nav__label {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 400;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .page-nav__center {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* ── Button ── */
+    .button-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+
+      width: clamp(140px, 20vw, 193px);
+      min-height: 72px;
+      padding: 10px 14px;
+      flex-shrink: 0;
+
+      background: var(--btn-bg);
+      border-radius: 35px;
+      outline: 4px solid var(--btn-border);
+      outline-offset: -4px;
+
+      color: black;
+      font-size: clamp(0.9rem, 1.8vw, 1.6875rem);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.4;
+      word-break: break-word;
+
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .button-home:hover {
+      background: var(--btn-hover);
+      transform: scale(1.05);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .page-nav__row {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .button-home { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Top Blue Banner with Page Title ── -->
+  <div class="banner-top">
+    <h1 class="page-title">All Time Low</h1>
+  </div>
+
+  <main>
+
+    <!-- ── YouTube embed ── -->
+    <div class="video-wrap">
+      <div class="ratio">
+        <iframe
+          src="https://www.youtube.com/embed/MriMMaTl3DE"
+          title="All Time Low"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <!-- ── Lyrics poster ── -->
+    <img class="lyrics-img"
+         src="./images/1-atl_poster.png"
+         alt="All Time Low — designed lyrics poster" />
+
+    <!-- ── Recreator's Note ── -->
+    <h2 class="section-heading">Recreator's Note</h2>
+
+    <div class="section--wide">
+      <div class="body-text justify">
+        <p>As part of the rising action revealing Burnham's struggles with mental health,
+        "All Time Low" or "ATL" follows a song called "Shit" and precedes "Welcome to the
+        Internet." "Shit" is one of the first songs that delves into his mental health,
+        ultimately sharing that he feels like shit while asking if others (the audience) also
+        feels bad. Like many of his songs, the style and tone (up-beat, peppy) of the song
+        "Shit" juxtaposes the dark subject matter of self-deprecation, which leads into
+        "ATL."</p>
+
+        <p>"All Time Low" opens with despondent dialogue that sets Burnham's rapidly declining
+        mental health to the state of an "all time low," then quickly transitions into another
+        up-beat, peppy melody that depicts what it feels like to experience a panic/anxiety
+        attack, a move that mirrors the tone of "Shit." "ATL" ends with more despondent,
+        spoken dialogue admitting that his declining mental health is "not great."</p>
+
+        <p>My visualized lyrics appear like a movie-poster, carrying with it symbolism that
+        embodies declining mental health.</p>
+
+        <p>Different fonts distinguish the dialogue from the sung lyrics, with stereotypical
+        "word bubbles" to represent the "third party" voice that demands that Burnham
+        "describe" his feelings.</p>
+
+        <p>The "positive space" looks like a zoomed-in knife with a bevel, and drops of blood
+        at the tip. This imagery plays into the gruesome and dangerous undertones of living
+        with mental health. Contrastingly, the "negative space," or the black space, makes
+        the knife look like a funnel, or the actual "tunnel vision" commonly associated with
+        panic/anxiety attacks, all coming to the drop of blood, the point of injury (physical
+        or mental).</p>
+
+        <p>I intentionally made this "poster" long or tall, as to require readers to scroll
+        down, lessening the amount of words visible on screen as the song progresses,
+        increasing the black border, leading to the exclamation "point" that is the blood
+        drop. At first, viewers don't have to scroll a lot, then, as the song progresses,
+        viewers must scroll faster and faster to keep up with the lyrics. This emulates the
+        panicky feeling that comes with having anxiety and experiencing a panic attack.</p>
+
+        <p>This song and lyric display are both particularly personal to me because I have
+        anxiety, and I didn't know it.</p>
+
+        <p>One of my friends (ironically the one with whom I first watched <em>Inside</em>)
+        asked me, "Amber, how do you deal with your anxiety?" And with 100% genuineness, I
+        responded, "What? I don't have anxiety."</p>
+
+        <p>Yes. Yes, in fact, I do. Little did I know that not everyone lives with an eternal
+        rock in their gut. Other humans don't look at Google Map traffic patterns to see if
+        there was a car accident on the route their spouse takes home just because they are 2
+        minutes late. Most people don't make "What If?" contingency plans for all their
+        plans—no matter how trivial those plans are. Anxiety free persons didn't think they
+        had brain tumors, Schizophrenia, or autoimmune diseases in their twenties because they
+        felt their skin crawl nearly every day. Non-panic-attack-experiencers don't think they
+        are dying when someone says, "We need to talk." These things are normal, right?
+        Doesn't everyone feel this way? At least I thought so.</p>
+
+        <p>How could I have not-known I had anxiety?</p>
+
+        <p>Bo Burnham has openly shared about his struggle with anxiety. A struggle that
+        mirrors mine. He struggled with health issues in high school, not knowing he had
+        anxiety, despite many signs that indicated so (Klein, 2018). "All Time Low" depicts
+        this struggle with anxiety, and I knew I wanted to convey to neurotypical people the
+        absolute horror of experiencing a panic attack. The sense of dread. Feeling like
+        there's no escape, no room, no end.</p>
+
+        <p>Initially, the "tunnel vision" image I had in mind would have been like the opening
+        credit of any <em>James Bond</em> movie, looking at an image through a bullet hole.
+        The lyrics could have been tiny, like bottom of the optometrist eyesight chart, to
+        indicate how far away they seem from the viewer. But in the spirit of trying to make
+        lyrics a bit more accessible, and even dynamic, the funnel idea with required
+        quickening scrolling seemed like a way to tap into the tightness and downward spiral
+        that comes with panic attacks.</p>
+
+        <p>When I sketched the idea out for my friend (the same one who watched
+        <em>Inside</em> with me for the first time, told me I had anxiety, and is a
+        board-certified optometrist (hey, Maranda!)), she immediately saw the funnel as a
+        knife and proposed I add the bevel to make it seem more menacing. My downward spiral
+        outline became a weapon that anxiety held to my throat. It was a perfect match for
+        the lyrics.</p>
+
+        <p>This knife image mirrors a snippet (not expanded upon in this project) elsewhere
+        in <em>Inside</em> where Burnham holds a knife in a threatening way, while
+        paradoxically thanking his viewers for their support.</p>
+
+        <p>Yet another reminder that media, like mental illness, holds us hostage. Explored
+        even further in the next song.</p>
+      </div>
+    </div>
+
+    <!-- ── Knife image ── -->
+    <img class="knife-img"
+         src="./images/2-knife.png"
+         alt="Burnham holds a knife and says 'Thank you' to the audience" />
+
+    <p class="caption">Burnham holds a knife and says "Thank you" to the audience</p>
+
+    <!-- ── Page navigation ── -->
+    <nav class="page-nav" aria-label="Page navigation">
+
+      <div class="page-nav__row">
+        <div class="page-nav__col">
+          <span class="page-nav__label">BACK</span>
+          <a href="./unpaid_intern.html" class="button-home">Unpaid Intern</a>
+        </div>
+        <div class="page-nav__col">
+          <span class="page-nav__label">NEXT</span>
+          <a href="./welcometotheinternet.html" class="button-home">Welcome to<br />the Internet</a>
+        </div>
+      </div>
+
+      <div class="page-nav__center">
+        <a href="./context_homepage.html" class="button-home">Go Home</a>
+      </div>
+
+    </nav>
+
+  </main>
+
+  <!-- ── Bottom Orange Banner ── -->
+  <div class="banner-bottom"></div>
+
+</body>
+</html>

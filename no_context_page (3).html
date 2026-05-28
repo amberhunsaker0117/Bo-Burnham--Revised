@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>No Context — Bo Burnham: Inside</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inder&family=Jost:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Design Tokens ── */
+    :root {
+      --blue-gradient:
+        linear-gradient(to bottom right, #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    right  / 50% 50% no-repeat;
+      --orange-gradient:
+        linear-gradient(to bottom right, rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    right  / 50% 50% no-repeat;
+
+      --font-body: 'Jost', sans-serif;
+      --font-heading: 'Inder', sans-serif;
+
+      --text-sm:   0.9375rem;   /* 15px */
+      --text-base: 1.125rem;    /* 18px, scales up from 25px original */
+      --text-lg:   1.5625rem;   /* 25px */
+      --text-xl:   1.875rem;    /* 30px */
+      --text-2xl:  4rem;        /* 64px */
+      --text-hero: clamp(2.5rem, 8vw, 6.25rem); /* 100px max */
+
+      --max-w: 820px;
+      --pad-x: clamp(1rem, 5vw, 2rem);
+      --gap:   clamp(1.5rem, 4vw, 2.5rem);
+
+      --btn-color: rgba(77, 197, 255, 0.30);
+      --btn-outline: #3EA1D1;
+      --btn-hover: rgba(255, 136, 77, 0.37);
+      --divider: rgba(0,0,0,0.20);
+    }
+
+    /* ── Body ── */
+    body {
+      background: white;
+      font-family: var(--font-body);
+      font-weight: 400;
+      color: black;
+      line-height: 1.6;
+    }
+
+    /* ── Banners ── */
+    .banner-top {
+      width: 100%;
+      min-height: clamp(120px, 18vw, 315px);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .banner-top::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.75;
+      background: linear-gradient(135deg, #4DC5FF 0%, #4BC0F9 40%, #3EA1D1 100%);
+      z-index: 0;
+    }
+    .banner-top .hero-title {
+      position: relative;
+      z-index: 1;
+    }
+    .banner-mid {
+      width: 100%;
+      min-height: clamp(120px, 18vw, 342px);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .banner-mid::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.75;
+      background: linear-gradient(135deg, #4DC5FF 0%, #4BC0F9 40%, #3EA1D1 100%);
+      z-index: 0;
+    }
+    .banner-mid .site-title-block {
+      position: relative;
+      z-index: 1;
+    }
+    .banner-bottom {
+      width: 100%;
+      height: clamp(60px, 10vw, 165px);
+      opacity: 0.75;
+      background: var(--orange-gradient);
+    }
+
+    /* ── Section wrapper ── */
+    .section {
+      width: 100%;
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Main content flow ── */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--gap);
+      padding-block: var(--gap);
+    }
+
+    /* ── Typography ── */
+    .hero-title {
+      font-size: var(--text-hero);
+      font-family: var(--font-body);
+      font-weight: 400;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .body-text {
+      font-size: clamp(1rem, 2.5vw, var(--text-lg));
+      line-height: 1.6;
+    }
+    .body-text.justify { text-align: justify; }
+    .body-text.center  { text-align: center; }
+
+    .caption {
+      font-size: var(--text-sm);
+      text-align: center;
+      line-height: 1.5;
+      max-width: var(--max-w);
+      padding-inline: var(--pad-x);
+    }
+
+    .section-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 6vw, var(--text-2xl));
+      font-weight: 400;
+      text-align: center;
+    }
+
+    /* ── Site Title Block (inside blue banner) ── */
+    .site-title-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100%;
+      padding: 1rem var(--pad-x);
+      gap: 0.25rem;
+    }
+    .site-title-block .title-line {
+      font-size: clamp(1.5rem, 4vw, 4rem);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.5;
+    }
+    .site-title-block .author-line {
+      font-size: clamp(1rem, 2.5vw, 1.875rem);
+      font-family: var(--font-body);
+      font-weight: 400;
+    }
+
+    /* ── Banner with content overlay ── */
+    .banner-with-content {
+      position: relative;
+      width: 100%;
+    }
+    .banner-with-content .banner-mid {
+      position: relative;
+      z-index: 0;
+    }
+    .banner-with-content .site-title-block {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    /* ── Images ── */
+    .full-img {
+      width: 100%;
+      max-width: var(--max-w);
+      height: auto;
+      display: block;
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+    .full-img.bordered {
+      border: 1px solid black;
+      box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+    }
+    .poster-img {
+      width: 100%;
+      max-width: 440px;
+      height: auto;
+      display: block;
+      margin-inline: auto;
+    }
+
+    /* ── YouTube iframe ── */
+    .video-wrap {
+      width: 100%;
+      max-width: 620px;
+      padding-inline: var(--pad-x);
+      margin-inline: auto;
+    }
+    .video-wrap .ratio {
+      position: relative;
+      padding-top: 56.25%; /* 16:9 */
+    }
+    .video-wrap .ratio iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ── Context section: text + poster side by side on desktop ── */
+    .context-layout {
+      width: 100%;
+      max-width: 1100px;
+      padding-inline: var(--pad-x);
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+      align-items: flex-start;
+    }
+    .context-layout .context-text { flex: 1; }
+
+    /* ── Lyric Pages: button + description rows ── */
+    .lyric-section {
+      width: 100%;
+      max-width: 1100px;
+      padding-inline: var(--pad-x);
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .lyric-row {
+      display: flex;
+      align-items: stretch;
+      gap: clamp(1rem, 3vw, 2rem);
+      padding-block: clamp(1rem, 2.5vw, 1.5rem);
+      border-bottom: 1px solid var(--divider);
+    }
+    .lyric-row:first-child { border-top: 1px solid var(--divider); }
+
+    .lyric-row__btn-wrap {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+    .lyric-row__desc {
+      flex: 1;
+      font-size: clamp(0.95rem, 2vw, var(--text-lg));
+      line-height: 1.6;
+      text-align: justify;
+      align-self: center;
+    }
+
+    /* ── Other Pages section ── */
+    .other-section {
+      width: 100%;
+      max-width: 1100px;
+      padding-inline: var(--pad-x);
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .other-row {
+      display: flex;
+      align-items: stretch;
+      gap: clamp(1rem, 3vw, 2rem);
+      padding-block: clamp(0.75rem, 2vw, 1.25rem);
+      border-bottom: 1px solid var(--divider);
+    }
+    .other-row:first-child { border-top: 1px solid var(--divider); }
+    .other-row__desc {
+      flex: 1;
+      font-size: clamp(0.95rem, 2vw, var(--text-lg));
+      line-height: 1.6;
+      text-align: justify;
+      display: flex;
+      align-items: center;
+    }
+
+    /* ── Button ── */
+    .button-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+
+      width: clamp(140px, 20vw, 193px);
+      min-height: 72px;
+      padding: 10px 14px;
+
+      background: var(--btn-color);
+      border-radius: 35px;
+      outline: 4px solid var(--btn-outline);
+      outline-offset: -4px;
+
+      color: black;
+      font-size: clamp(0.9rem, 2vw, 1.6875rem);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.4;
+      word-break: break-word;
+
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      flex-shrink: 0;
+    }
+    .button-home:hover {
+      background: var(--btn-hover);
+      transform: scale(1.05);
+    }
+
+    /* ── "I'm Ready" CTA image ── */
+    .cta-img {
+      width: 100%;
+      max-width: 667px;
+      height: auto;
+      display: block;
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Responsive ── */
+    @media (min-width: 768px) {
+      .context-layout {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+      .poster-img {
+        width: clamp(260px, 30vw, 440px);
+      }
+      .lyric-row { flex-direction: row; }
+      .other-row { flex-direction: row; }
+    }
+
+    @media (max-width: 767px) {
+      .lyric-row { flex-direction: column; align-items: flex-start; }
+      .lyric-row__desc { text-align: left; }
+      .other-row { flex-direction: column; align-items: flex-start; }
+      .other-row__desc { text-align: left; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .button-home { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Top Blue Banner ── -->
+  <div class="banner-top">
+    <h1 class="hero-title">You are MISSING OUT!!</h1>
+  </div>
+
+  <main>
+
+    <!-- ── Intro paragraphs ── -->
+    <div class="section">
+      <p class="body-text justify">
+        Seriously. Go watch it! If you're reading this, you might be interested in Bo Burnham,
+        and you're missing his best work yet. Or you're interested in post-modern forms of
+        communication, in which case, you're missing out on a prime example of post-modern work.
+        Maybe you're reading this because you're obligated to in some way—
+        <em>Inside</em> will give you a good laugh, and you deserve a break!
+      </p>
+    </div>
+
+    <div class="section">
+      <p class="body-text center">In any case, I strongly encourage you to watch Inside!</p>
+    </div>
+
+    <!-- ── Photo ── -->
+    <img class="full-img" src="./images/1-burnham_on_ground_with_cords.png"
+         alt="Burnham lays on the ground surrounded with recording equipment" />
+
+    <p class="caption">
+      Burnham lays on the ground, surrounded with recording equipment, commenting upon how
+      allowing media corporations to exploit children and flattening the human experience
+      into marketable value is bad.
+    </p>
+
+    <!-- ── "But I get it" section ── -->
+    <div class="section">
+      <p class="body-text center">
+        But I get it.<br />
+        You're busy.<br />
+        You don't have Netflix.<br />
+        You're just here because you have to be.<br />
+        Whatever the reason.<br />
+        If you don't have time, here's a summary of <em>Inside</em>:
+      </p>
+    </div>
+
+    <!-- ── Summary ── -->
+    <div class="section">
+      <p class="body-text justify">
+        Comedian Bo Burnham wrote, sang, directed, starred in, produced, and edited a
+        post-modern piece of cinematic mastery that takes place solely in (or in front of)
+        his guest house. It's a collection of music videos, interspersed with "B Roll"
+        footage of his creating the special (that also showing his deteriorating mental health)
+        and "snippets" that aren't songs but rather parodies of common kinds of other videos
+        (like directly thanking the audience for watching, commercials, interviews, live gaming
+        feeds). Emerging during peak COVID-19 pandemic, Burnham satirically commentates upon
+        serious systemic issues, like racism, classism, labor exploitation, destructive
+        technological practices, societal norms that are questionable at best, among
+        others—the very things that shouldn't be joked about (something he himself questions
+        at the very beginning). This "comedy special" highlights themes of mental health,
+        performativity, and the crumbling of society as we knew it.
+      </p>
+      <br />
+      <p class="body-text justify">
+        If you want to see a wonderful compilation from the special, watch this unofficial,
+        fan-made trailer that honestly does a fantastic job of capturing the tone and
+        character of the film.
+      </p>
+    </div>
+
+    <!-- ── YouTube embed ── -->
+    <div class="video-wrap">
+      <div class="ratio">
+        <iframe
+          src="https://www.youtube.com/embed/zJgEaZ9-Wy4"
+          title="Bo Burnham: INSIDE | Trailer"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <!-- ── Wrap-up ── -->
+    <div class="section">
+      <p class="body-text justify">
+        Okay, okay. Now that you're kind of caught up, go join the angsty people who already
+        watched and worshiped <em>Inside</em>, the 2021 time capsule that it is. Representative
+        of its time. Timeless for the rest of us.
+      </p>
+    </div>
+
+  </main><!-- end intro section -->
+
+
+  <!-- ── Mid Blue Banner (site title) ── -->
+  <div class="banner-with-content">
+    <div class="banner-mid"></div>
+    <div class="site-title-block">
+      <p class="title-line">Rhetorically Designing Lyrics from<br /><em>Bo Burnham: Inside</em></p>
+      <p class="author-line">by Amber Hunsaker</p>
+    </div>
+  </div>
+
+
+  <main>
+
+    <!-- ── Context section ── -->
+    <h2 class="section-heading">Context</h2>
+
+    <div class="context-layout">
+      <div class="context-text">
+        <p class="body-text justify">
+          On May 30th, 2021, Bo Burnham released <em>Bo Burnham: Inside</em> on Netflix. This
+          "comedy special" parodies American life during COVID-19, while also highlighting deeply
+          entrenched systemic issues of capitalism, struggles with mental health, existential
+          crises, and expectations of performativity. Burnham's lyrics and script are
+          simultaneously hilarious, dark, hopeful, pessimistic, personal, universal, and profound.
+        </p>
+        <br />
+        <p class="body-text justify">
+          Because of the multifaceted and nuanced layers, Burnham's work should be experienced
+          through multimodal forms of communication. Lauer (2009) summates that "[m]ultimodal
+          texts are characterized by the mixed logics brought together through the combination
+          of modes" and that "the screen is becoming the primary site where multiple modes can
+          be composed to make meaning in dynamic ways" (227). But it's not enough to simply
+          participate in reading these modes, I also wanted to create them.
+        </p>
+        <br />
+        <p class="body-text justify">
+          Presented in this collection is my effort to visually express communication regarding
+          how I experienced the lyrics of <em>Inside.</em>
+        </p>
+      </div>
+      <img class="poster-img" src="./images/2-bo-burnham-inside-poster.png"
+           alt="Bo Burnham: Inside official poster" />
+    </div>
+
+    <!-- ── Songs intro ── -->
+    <div class="section">
+      <p class="body-text justify">
+        What follows are four original Bo Burnham songs from his comedy special,
+        <em>Bo Burnham: Inside</em> and one song from his "Outtakes" version of
+        <em>Inside</em>. I have designed the lyrics in such a way to convey the underscoring
+        themes and feelings found within Inside.
+      </p>
+    </div>
+
+    <!-- ── GIF ── -->
+    <img class="full-img bordered" src="./images/white_womens_instagram.gif"
+         alt='Burnham during his song "White Woman\'s Instagram"' />
+
+    <p class="caption">Gif of Burnham during his song "White Woman's Instagram"</p>
+
+    <!-- ── How to experience lyrics ── -->
+    <h2 class="section-heading">How to experience the Lyrics</h2>
+
+    <div class="section">
+      <p class="body-text justify">
+        The lyrics here are presented in set list order of <em>Inside</em>.<br /><br />
+        Each page containing lyrics will begin with a video of the song that is being
+        transcribed. Some videos are actual music videos from Inside while other videos
+        are audio only videos.<br /><br />
+        I recommend playing the video/audio and following along with the lyrics. After each
+        set of lyrics, there is a "Recreator's Note" where viewers can opt to read an
+        analysis/justification of decisions and inspiration. A comprehensive reflection of
+        this project can be found on a separate page.<br /><br />
+        If you have blue/red 3-D glasses handy, now is the time to find and use them when
+        prompted.
+      </p>
+    </div>
+
+    <!-- ── Lyric Pages ── -->
+    <h2 class="section-heading">Lyric Pages</h2>
+
+    <div class="lyric-section">
+
+      <div class="lyric-row">
+        <div class="lyric-row__btn-wrap">
+          <a href="./unpaid_intern.html" class="button-home">Unpaid Intern</a>
+        </div>
+        <p class="lyric-row__desc">
+          Criticizing labor exploitation, while self-degrading his need to be liked and
+          appreciated, Burnham's lyrics/performance create a cacophony of noise that
+          contributes to listeners' experience of living in a world where voices are
+          constantly bombarding online platforms, all striving to be heard and stand out.
+          My work shows a literal voice-to-visual representation that exemplifies the chaos
+          Burnham delivers.
+        </p>
+      </div>
+
+      <div class="lyric-row">
+        <div class="lyric-row__btn-wrap">
+          <a href="./all_time_low.html" class="button-home">All Time Low</a>
+        </div>
+        <p class="lyric-row__desc">
+          Early in Burnham's documented mental health crisis, "All Time Low" attempts to
+          ironically describe what it's like experiencing a panic/anxiety attack. Recreated
+          lyrics use metaphoric imagery to capture "that funny feeling" of impending doom.
+        </p>
+      </div>
+
+      <div class="lyric-row">
+        <div class="lyric-row__btn-wrap">
+          <a href="./welcometotheinternet.html" class="button-home">Welcome to<br />the Internet</a>
+        </div>
+        <p class="lyric-row__desc">
+          One of Burnham's most popular songs, "Welcome to the Internet" is catchy and dark,
+          wrapped into a stellar banger. My transcribed lyrics are a meta-representation of
+          the song because they use the media/lyrical subject itself as a form of
+          communication.
+        </p>
+      </div>
+
+      <div class="lyric-row">
+        <div class="lyric-row__btn-wrap">
+          <a href="./bezos2.html" class="button-home">Bezos II</a>
+        </div>
+        <p class="lyric-row__desc">
+          While simple in lyrics, the song is laced with a condescending irony and
+          tongue-in-cheek rhetoric, built up throughout the entire special. The visual
+          lyrics lean into the ironic tones, depicting seemingly celebratory lyrics with
+          campy visuals, some grounded in internet meme-lore.
+        </p>
+      </div>
+
+      <div class="lyric-row">
+        <div class="lyric-row__btn-wrap">
+          <a href="./all_eyes_on_me.html" class="button-home">All Eyes On Me Outtakes</a>
+        </div>
+        <p class="lyric-row__desc">
+          Arguably the most important song in all of <em>Inside</em>, including "<em>Inside</em>: The Outtakes," because of its non-satirical plea that viewers connect with Burnham. Visually represented lyrics incorporate all the aforementioned styles of visualization: literal, metaphorical, meta-representative, and tonal.
+        </p>
+      </div>
+
+    </div><!-- /lyric-section -->
+
+    <!-- ── Content GIF ── -->
+    <img class="full-img" src="./images/made_you_content.gif"
+         alt='Burnham\'s lyrics from "Content"' />
+    <p class="caption">Gif of Burnham's lyrics from "Content"</p>
+
+    <!-- ── Other pages ── -->
+    <div class="section">
+      <p class="body-text justify">After the lyric pages, you can find the following pages:</p>
+    </div>
+
+    <div class="other-section">
+
+      <div class="other-row">
+        <div class="lyric-row__btn-wrap">
+          <a href="./research_page.html" class="button-home">Research</a>
+        </div>
+        <p class="other-row__desc">
+          I offer justification for exploring Burnham's work through a multimodal lens.
+        </p>
+      </div>
+
+      <div class="other-row">
+        <div class="lyric-row__btn-wrap">
+          <a href="./performativity_page.html" class="button-home">My<br />Performativity</a>
+        </div>
+        <p class="other-row__desc">
+          This project did not solely take place on the inter-webs; it materialized into
+          the real world.
+        </p>
+      </div>
+
+      <div class="other-row">
+        <div class="lyric-row__btn-wrap">
+          <a href="./reflection_page.html" class="button-home">Reflection</a>
+        </div>
+        <p class="other-row__desc">
+          While reflection can be found throughout the "Recreator's Notes" found underneath
+          the designed lyrics, this page shares my reflection of completing the project as a
+          whole, or of elements found throughout the project (not specific to one set of lyrics).
+        </p>
+      </div>
+
+      <div class="other-row">
+        <div class="lyric-row__btn-wrap">
+          <a href="./works_cited.html" class="button-home">Works Cited</a>
+        </div>
+        <p class="other-row__desc">
+          Surprise, I cited all my sources throughout the site.
+        </p>
+      </div>
+
+      <div class="other-row">
+        <div class="lyric-row__btn-wrap">
+          <a href="./thank_you.html" class="button-home">Thank You</a>
+        </div>
+        <p class="other-row__desc">
+          As you might imagine, I thank key people who helped make this project happen.
+        </p>
+      </div>
+
+    </div><!-- /other-section -->
+
+    <!-- ── CTA image ── -->
+    <a href="./unpaid_intern.html" style="text-decoration: none;">
+      <img class="cta-img" src="./images/3-i-m-ready-now_.png" alt="I'm Ready Now" />
+    </a>
+
+  </main>
+
+  <!-- ── Bottom Orange Banner ── -->
+  <div class="banner-bottom"></div>
+
+</body>
+</html>

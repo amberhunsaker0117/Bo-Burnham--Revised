@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Own Performativity — Bo Burnham: Inside</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inder&family=Jost:ital,wght@0,400;1,400&family=Nanum+Pen+Script&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Design Tokens ── */
+    :root {
+      --blue-gradient:
+        linear-gradient(to bottom right, #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    right  / 50% 50% no-repeat;
+      --orange-gradient:
+        linear-gradient(to bottom right, rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    right  / 50% 50% no-repeat;
+
+      --font-body:    'Jost', sans-serif;
+      --font-title:   'Nanum Pen Script', cursive;
+      --font-heading: 'Inder', sans-serif;
+
+      --text-sm:   0.9375rem;
+      --text-lg:   1.5625rem;
+      --text-2xl:  4rem;
+      --text-hero: clamp(2.5rem, 10vw, 10.625rem); /* 170px max */
+
+      --max-w:  900px;
+      --wide-w: 1100px;
+      --pad-x:  clamp(1rem, 5vw, 2rem);
+      --gap:    clamp(1.5rem, 4vw, 2.5rem);
+
+      --btn-bg:     rgba(77, 197, 255, 0.30);
+      --btn-border: #3EA1D1;
+      --btn-hover:  rgba(255, 136, 77, 0.37);
+    }
+
+    /* ── Base ── */
+    body {
+      background: white;
+      font-family: var(--font-body);
+      font-weight: 400;
+      color: black;
+      line-height: 1.6;
+    }
+
+    /* ── Top Banner with title ── */
+    .banner-top {
+      position: relative;
+      width: 100%;
+      min-height: clamp(160px, 22vw, 469px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .banner-top::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.75;
+      background: linear-gradient(135deg, #4DC5FF 0%, #4BC0F9 40%, #3EA1D1 100%);
+      z-index: 0;
+    }
+    .banner-top .page-title,
+    .banner-top .site-title,
+    .banner-top .page-title,
+    .banner-top .banner-top__content,
+    .banner-top .title-card {
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-title {
+      font-family: var(--font-title);
+      font-size: var(--text-hero);
+      font-weight: 400;
+      text-align: center;
+      /* Nanum Pen Script has a naturally tight line-height */
+      line-height: 1.1;
+      padding: clamp(1rem, 3vw, 2rem) var(--pad-x);
+    }
+
+    /* ── Bottom Banner ── */
+    .banner-bottom {
+      width: 100%;
+      height: clamp(60px, 10vw, 165px);
+      opacity: 0.75;
+      background: var(--orange-gradient);
+    }
+
+    /* ── Main content ── */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--gap);
+      padding-block: var(--gap);
+    }
+
+    /* ── Section wrappers ── */
+    .section {
+      width: 100%;
+      max-width: var(--max-w);
+      padding-inline: var(--pad-x);
+    }
+    .section--wide {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Body text ── */
+    .body-text {
+      font-size: clamp(1rem, 2.5vw, var(--text-lg));
+      line-height: 1.6;
+    }
+    .body-text.justify { text-align: justify; }
+    .body-text p + p   { margin-top: 1.25rem; }
+
+    /* ── 2×2 photo grid ── */
+    /*    Original: two pairs of side-by-side images with captions  */
+    .photo-grid {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1rem, 3vw, 2rem);
+    }
+
+    .photo-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .photo-cell img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 2px;
+    }
+
+    .photo-caption {
+      font-size: clamp(0.85rem, 2vw, var(--text-sm));
+      text-align: center;
+      line-height: 1.4;
+      color: black;
+    }
+
+    /* ── Full-width images ── */
+    .full-img {
+      width: 100%;
+      max-width: var(--wide-w);
+      height: auto;
+      display: block;
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+    .full-img--mid {
+      max-width: 640px;
+    }
+
+    /* ── Page nav ── */
+    .page-nav {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    .page-nav__row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .page-nav__col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .page-nav__label {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 400;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .page-nav__center {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* ── Button ── */
+    .button-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+
+      width: clamp(140px, 20vw, 193px);
+      min-height: 72px;
+      padding: 10px 14px;
+      flex-shrink: 0;
+
+      background: var(--btn-bg);
+      border-radius: 35px;
+      outline: 4px solid var(--btn-border);
+      outline-offset: -4px;
+
+      color: black;
+      font-size: clamp(0.9rem, 1.8vw, 1.6875rem);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.4;
+      word-break: break-word;
+
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .button-home:hover {
+      background: var(--btn-hover);
+      transform: scale(1.05);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      /* Stack photo grid to single column on small screens */
+      .photo-grid {
+        grid-template-columns: 1fr;
+      }
+      .page-nav__row {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .button-home { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Top Blue Banner with Page Title ── -->
+  <div class="banner-top">
+    <h1 class="page-title">My own<br />Performativity</h1>
+  </div>
+
+  <main>
+
+    <!-- ── Intro text ── -->
+    <div class="section--wide">
+      <div class="body-text justify">
+        <p>This project was originally created for a doctoral level Rhetorical Theory course.
+        Leaning into Burnham's heavy critique of performativity I sent my professor
+        (Dr. Danielle Nielsen) 3D glasses for the "All Eyes On Me (Outtakes)" lyrics.</p>
+
+        <p>The glasses were put into an authentic Chanel glasses case, wrapped in an Amazon
+        gift bag, in an Amazon box with original Amazon tape (all to paradoxically lean into
+        the anti-capitalistic narrative Burnham presents and to play with the irony found
+        within the "Bezos's" songs).</p>
+      </div>
+    </div>
+
+    <!-- ── 2×2 Photo grid ── -->
+    <div class="photo-grid">
+
+      <div class="photo-cell">
+        <img src="./images/1-glasses.png"
+             alt="3D glasses with Amazon Logo" />
+        <p class="photo-caption">3D glasses with Amazon Logo</p>
+      </div>
+
+      <div class="photo-cell">
+        <img src="./images/2-glasses_in_case.png"
+             alt="3D glasses in Chanel Case" />
+        <p class="photo-caption">3D glasses in Chanel Case</p>
+      </div>
+
+      <div class="photo-cell">
+        <img src="./images/3-classes_in_package.png"
+             alt="Case in Amazon gift bag, with fake 'Gift for You' note (QR code works)" />
+        <p class="photo-caption">Case in Amazon gift bag, with fake "Gift for You" note
+        (QR code works)</p>
+      </div>
+
+      <div class="photo-cell">
+        <img src="./images/4-package_ready.png"
+             alt="Ready to send package in Amazon box" />
+        <p class="photo-caption">Ready to send package in Amazon box</p>
+      </div>
+
+    </div>
+
+    <!-- ── Email intro ── -->
+    <div class="section--wide">
+      <p class="body-text justify">
+        When I sent Dr. Nielsen the package, I also sent her an email (see below) with the
+        tracking number. Like everything else in this project, it was also over the top.
+        (The attachment from the email is the same gif found on the home page of this site.)
+      </p>
+    </div>
+
+    <!-- ── Email screenshot ── -->
+    <img class="full-img"
+         src="./images/5-get_excited_email.png"
+         alt="Screenshot of the 'Get Excited' email sent to Dr. Nielsen" />
+
+    <!-- ── Email reflection ── -->
+    <div class="section--wide">
+      <p class="body-text justify">
+        I loved the fact this email looks like a spam email. My professor knew a package was
+        coming, since I had to ask for a good mailing address. But sending the email made the
+        entire experience even more ridiculous and campy.
+      </p>
+    </div>
+
+    <!-- ── "That's how the world works" GIF ── -->
+    <img class="full-img full-img--mid"
+         src="./images/6-that_s_how_the_world_works.gif"
+         alt="Gif from Bo Burnham's Inside: 'That's how the world works'" />
+
+    <!-- ── Closing reflection ── -->
+    <div class="section--wide">
+      <div class="body-text justify">
+        <p>In regards to putting together this entire website, part of the performativity
+        is using gifs and images from Burnham's <em>Inside</em> to speak for me, or say
+        things in a way that are better said in images. If pictures are worth a thousand
+        words, I wonder how many words gifs are worth? Particularly in web-text based
+        writings, like here in <em>Kairos</em>, the insertion of videos, pictures, and gifs
+        add to the argument. Not only can we use them for evidence and examples, but to
+        really <em>use</em> them to bring connotations that text alone cannot. The
+        "Ugh face/Feel Good" meme in the "Bezos II" lyrics is a prime example. Those versed
+        in "meme-lore" understand the deep-seeded irony of that meme. Those who are not,
+        either will learn, or are not as affected by it, but can still pick up the
+        meaning.</p>
+
+        <p>Bo Burnham's <em>Inside</em> can only be found online. To turn around and
+        satirically berate viewers for being chronically online, the exact place where his
+        audience finds, watches, and supports his art, is bold. I can only hope to be such
+        a badass.</p>
+      </div>
+    </div>
+
+    <!-- ── Page navigation ── -->
+    <nav class="page-nav" aria-label="Page navigation">
+
+      <div class="page-nav__row">
+        <div class="page-nav__col">
+          <span class="page-nav__label">BACK</span>
+          <a href="./research_page.html" class="button-home">Research</a>
+        </div>
+        <div class="page-nav__col">
+          <span class="page-nav__label">NEXT</span>
+          <a href="./reflection_page.html" class="button-home">Reflection</a>
+        </div>
+      </div>
+
+      <div class="page-nav__center">
+        <a href="./context_homepage.html" class="button-home">Go Home</a>
+      </div>
+
+    </nav>
+
+  </main>
+
+  <!-- ── Bottom Orange Banner ── -->
+  <div class="banner-bottom"></div>
+
+</body>
+</html>

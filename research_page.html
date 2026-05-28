@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research — Bo Burnham: Inside</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inder&family=Jost:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Design Tokens ── */
+    :root {
+      --blue-gradient:
+        linear-gradient(to bottom right, #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    right  / 50% 50% no-repeat;
+      --orange-gradient:
+        linear-gradient(to bottom right, rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    right  / 50% 50% no-repeat;
+
+      --font-body:    'Jost', sans-serif;
+      --font-heading: 'Inder', sans-serif;
+
+      --text-sm:   0.9375rem;
+      --text-lg:   1.5625rem;
+      --text-hero: clamp(2.5rem, 10vw, 8.125rem); /* 130px max */
+
+      --wide-w: 1100px;
+      --pad-x:  clamp(1rem, 5vw, 2rem);
+      --gap:    clamp(1.5rem, 4vw, 2.5rem);
+
+      --btn-bg:     rgba(77, 197, 255, 0.30);
+      --btn-border: #3EA1D1;
+      --btn-hover:  rgba(255, 136, 77, 0.37);
+    }
+
+    /* ── Base ── */
+    body {
+      background: white;
+      font-family: var(--font-body);
+      font-weight: 400;
+      color: black;
+      line-height: 1.6;
+    }
+
+    /* ── Top Banner with title ── */
+    .banner-top {
+      position: relative;
+      width: 100%;
+      min-height: clamp(160px, 22vw, 469px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .banner-top::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.75;
+      background: linear-gradient(135deg, #4DC5FF 0%, #4BC0F9 40%, #3EA1D1 100%);
+      z-index: 0;
+    }
+    .banner-top .page-title,
+    .banner-top .site-title,
+    .banner-top .page-title,
+    .banner-top .banner-top__content,
+    .banner-top .title-card {
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-title {
+      font-family: var(--font-body);
+      font-size: var(--text-hero);
+      font-weight: 400;
+      text-align: center;
+      line-height: 1.5;
+      padding: clamp(1rem, 3vw, 2rem) var(--pad-x);
+    }
+
+    /* ── Bottom Banner ── */
+    .banner-bottom {
+      width: 100%;
+      height: clamp(60px, 10vw, 165px);
+      opacity: 0.75;
+      background: var(--orange-gradient);
+    }
+
+    /* ── Main content ── */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--gap);
+      padding-block: var(--gap);
+    }
+
+    /* ── Section wrapper ── */
+    .section--wide {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Body text ── */
+    .body-text {
+      font-size: clamp(1rem, 2.5vw, var(--text-lg));
+      line-height: 1.6;
+      text-align: justify;
+    }
+    .body-text p + p { margin-top: 1.25rem; }
+
+    /* ── GIF ── */
+    .full-img {
+      width: 100%;
+      max-width: 640px;
+      height: auto;
+      display: block;
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Page nav ── */
+    .page-nav {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    .page-nav__row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .page-nav__col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .page-nav__label {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 400;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .page-nav__center {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* ── Button ── */
+    .button-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+
+      width: clamp(140px, 20vw, 193px);
+      min-height: 72px;
+      padding: 10px 14px;
+      flex-shrink: 0;
+
+      background: var(--btn-bg);
+      border-radius: 35px;
+      outline: 4px solid var(--btn-border);
+      outline-offset: -4px;
+
+      color: black;
+      font-size: clamp(0.9rem, 1.8vw, 1.6875rem);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.4;
+      word-break: break-word;
+
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .button-home:hover {
+      background: var(--btn-hover);
+      transform: scale(1.05);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .page-nav__row {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .button-home { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Top Blue Banner with Page Title ── -->
+  <div class="banner-top">
+    <h1 class="page-title">Research</h1>
+  </div>
+
+  <main>
+
+    <!-- ── First text block ── -->
+    <div class="section--wide">
+      <div class="body-text">
+        <p>In their seminal work defining multimodality, The New London Group (1996) argues
+        that literacy educators and students must see themselves as active participants in
+        social change — learners who can be active designers and makers of social futures
+        (64). They continue by suggesting that teachers and students are both inheritors of
+        patterns and conventions of meaning and at the same time active designers of meaning
+        (65). In essence, they urge readers to read and create multimodal pieces to
+        understand traditional modes of communication and to fundamentally change how we
+        communicate, thus changing cultural norms to be more inclusive of all voices. The
+        New London Group introduces six modes through which meaning is made: linguistic,
+        visual, audio, gestural, spatial, and how these five work together to create meaning
+        (multimodality).</p>
+      </div>
+    </div>
+
+    <!-- ── GIF ── -->
+    <img class="full-img"
+         src="./images/and_thats_true.gif"
+         alt="Bo Burnham gif — 'And that's true'" />
+
+    <!-- ── Second text block ── -->
+    <div class="section--wide">
+      <div class="body-text">
+        <p>My work visualizing Bo Burnham's lyrics seeks to contribute to the modes with
+        which we create meaning by reimagining what it means to communicate visually,
+        incorporating elements from gestural and spatial. Much of my work stems from my own
+        "felt sense."</p>
+
+        <p>Drawing on the work of American philosopher Eugene Gendlin, Peter Elbow (n.d)
+        describes that felt sense points to an aspect of our experience that often
+        accompanies us when we are involved in a creative act. Throughout the creation of
+        this website, I've learned that I rely heavily upon my felt sense. I can feel when
+        something is good/right/effective. I can also feel when something is off. This
+        embodied experience is how I feel watching <em>Inside</em>. It's more than just a
+        visual/aural experience. This comedy special moved me. It left (still leaves) me
+        gut-punched, hollowed in the belly. I started this project because when I focused
+        upon the captioning of "'Unpaid Intern' — Reaction Video," I didn't feel the same
+        physical-ness. The captioning wasn't doing enough to convey Burnham's
+        message/argument. Captions didn't capture the essence of the songs/snippets. As a
+        person of sight and hearing, with a strong "felt sense" intuition, in my mind's eye
+        I could "see" what the lyrics sounded like, and I could tell that my visualizations
+        of said lyrics "felt right." So I sought to create or manifest visual representations
+        that I thought best conveyed the feeling persons of hearing get when listening to the
+        songs.</p>
+      </div>
+    </div>
+
+    <!-- ── Page navigation ── -->
+    <nav class="page-nav" aria-label="Page navigation">
+
+      <div class="page-nav__row">
+        <div class="page-nav__col">
+          <span class="page-nav__label">BACK</span>
+          <a href="./all_eyes_on_me.html" class="button-home">All Eyes On Me<br />Outtakes</a>
+        </div>
+        <div class="page-nav__col">
+          <span class="page-nav__label">NEXT</span>
+          <a href="./performativity_page.html" class="button-home">My<br />Performativity</a>
+        </div>
+      </div>
+
+      <div class="page-nav__center">
+        <a href="./context_homepage.html" class="button-home">Go Home</a>
+      </div>
+
+    </nav>
+
+  </main>
+
+  <!-- ── Bottom Orange Banner ── -->
+  <div class="banner-bottom"></div>
+
+</body>
+</html>

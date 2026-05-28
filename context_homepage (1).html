@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Context Homepage — Bo Burnham: Inside</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inder&family=Jost:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Design Tokens ── */
+    :root {
+      --blue-gradient:
+        linear-gradient(to bottom right, #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    right  / 50% 50% no-repeat;
+      --orange-gradient:
+        linear-gradient(to bottom right, rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    right  / 50% 50% no-repeat;
+
+      --font-body:    'Jost', sans-serif;
+      --font-heading: 'Inder', sans-serif;
+
+      --text-sm:   0.9375rem;
+      --text-lg:   1.5625rem;
+      --text-xl:   1.875rem;
+      --text-2xl:  4rem;
+
+      --max-w:   840px;
+      --pad-x:   clamp(1rem, 5vw, 2rem);
+      --gap:     clamp(1.5rem, 4vw, 2.5rem);
+      --divider: rgba(0,0,0,0.20);
+
+      --btn-bg:     rgba(77, 197, 255, 0.30);
+      --btn-border: #3EA1D1;
+      --btn-hover:  rgba(255, 136, 77, 0.37);
+    }
+
+    /* ── Base ── */
+    body {
+      background: white;
+      font-family: var(--font-body);
+      font-weight: 400;
+      color: black;
+      line-height: 1.6;
+    }
+
+    /* ── Banners ── */
+    .banner-top {
+      width: 100%;
+      height: clamp(140px, 20vw, 342px);
+      position: relative;
+    }
+    .banner-top::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.75;
+      background: linear-gradient(135deg, #4DC5FF 0%, #4BC0F9 40%, #3EA1D1 100%);
+      z-index: 0;
+    }
+    .banner-top .page-title,
+    .banner-top .site-title,
+    .banner-top .page-title,
+    .banner-top .banner-top__content,
+    .banner-top .title-card {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Site title sits inside the top banner */
+    .banner-top__content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-inline: var(--pad-x);
+      gap: 0.25rem;
+    }
+    .site-title {
+      font-family: var(--font-body);
+      font-size: clamp(1.4rem, 4vw, 4rem);
+      font-weight: 400;
+      line-height: 1.5;
+    }
+    .site-author {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 2.5vw, 1.875rem);
+      font-weight: 400;
+    }
+
+    .banner-bottom {
+      width: 100%;
+      height: clamp(60px, 10vw, 165px);
+      opacity: 0.75;
+      background: var(--orange-gradient);
+    }
+
+    /* ── Main content flow ── */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--gap);
+      padding-block: var(--gap);
+    }
+
+    /* ── Generic section wrapper ── */
+    .section {
+      width: 100%;
+      max-width: var(--max-w);
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Section headings ── */
+    .section-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 6vw, var(--text-2xl));
+      font-weight: 400;
+      text-align: center;
+    }
+
+    /* ── Body text ── */
+    .body-text {
+      font-size: clamp(1rem, 2.5vw, var(--text-lg));
+      line-height: 1.6;
+    }
+    .body-text.justify { text-align: justify; }
+    .body-text.center  { text-align: center; }
+
+    .caption {
+      font-size: var(--text-sm);
+      text-align: center;
+      line-height: 1.5;
+      max-width: var(--max-w);
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Context layout: text left, poster right on desktop ── */
+    .context-layout {
+      width: 100%;
+      max-width: 1100px;
+      padding-inline: var(--pad-x);
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+      align-items: flex-start;
+    }
+    .context-layout .context-text { flex: 1; }
+    .context-layout .context-text p + p { margin-top: 1.25rem; }
+
+    .poster-img {
+      width: 100%;
+      max-width: 440px;
+      height: auto;
+      display: block;
+      margin-inline: auto;
+      flex-shrink: 0;
+    }
+
+    /* ── Images ── */
+    .full-img {
+      width: 100%;
+      max-width: var(--max-w);
+      height: auto;
+      display: block;
+      padding-inline: var(--pad-x);
+      margin-inline: auto;
+    }
+    .full-img.bordered {
+      border: 1px solid black;
+      box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+    }
+
+    /* ── Lyric rows (button + description) ── */
+    .rows-section {
+      width: 100%;
+      max-width: 1100px;
+      padding-inline: var(--pad-x);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-row {
+      display: flex;
+      flex-direction: column;        /* mobile: stack */
+      align-items: flex-start;
+      gap: clamp(0.75rem, 2vw, 1.25rem);
+      padding-block: clamp(1rem, 2.5vw, 1.5rem);
+      border-bottom: 1px solid var(--divider);
+    }
+    .nav-row:first-child { border-top: 1px solid var(--divider); }
+
+    .nav-row__desc {
+      font-size: clamp(0.95rem, 2vw, var(--text-lg));
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    /* ── Button ── */
+    .button-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+
+      width: clamp(140px, 20vw, 193px);
+      min-height: 72px;
+      padding: 10px 14px;
+      flex-shrink: 0;
+
+      background: var(--btn-bg);
+      border-radius: 35px;
+      outline: 4px solid var(--btn-border);
+      outline-offset: -4px;
+
+      color: black;
+      font-size: clamp(0.9rem, 1.8vw, 1.6875rem);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.4;
+      word-break: break-word;
+
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .button-home:hover {
+      background: var(--btn-hover);
+      transform: scale(1.05);
+    }
+
+    /* ── CTA image ── */
+    .cta-img {
+      width: 100%;
+      max-width: 667px;
+      height: auto;
+      display: block;
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Responsive: side-by-side on tablet+ ── */
+    @media (min-width: 768px) {
+      .context-layout {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+      .poster-img {
+        width: clamp(240px, 28vw, 440px);
+      }
+      .nav-row {
+        flex-direction: row;
+        align-items: center;
+      }
+      .nav-row__desc {
+        text-align: justify;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .button-home { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Top Blue Banner with Site Title ── -->
+  <div class="banner-top">
+    <div class="banner-top__content">
+      <h1 class="site-title">
+        Rhetorically Designing Lyrics from<br />
+        <em>Bo Burnham: Inside</em>
+      </h1>
+      <p class="site-author">by Amber Hunsaker</p>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ── Context: text + poster ── -->
+    <h2 class="section-heading">Context</h2>
+
+    <div class="context-layout">
+      <div class="context-text">
+        <p class="body-text justify">
+          On May 30th, 2021, Bo Burnham released <em>Bo Burnham: Inside</em> on Netflix.
+          This "comedy special" parodies American life during COVID-19, while also highlighting
+          deeply entrenched systemic issues of capitalism, struggles with mental health,
+          existential crises, and expectations of performativity. Burnham's lyrics and script
+          are simultaneously hilarious, dark, hopeful, pessimistic, personal, universal,
+          and profound.
+        </p>
+        <p class="body-text justify">
+          Because of the multifaceted and nuanced layers, Burnham's work should be experienced
+          through multimodal forms of communication. Lauer (2009) summates that "[m]ultimodal
+          texts are characterized by the mixed logics brought together through the combination
+          of modes" and that "the screen is becoming the primary site where multiple modes can
+          be composed to make meaning in dynamic ways" (227). But it's not enough to simply
+          participate in reading these modes, I also wanted to create them.
+        </p>
+        <p class="body-text justify">
+          Presented in this collection is my effort to visually express communication
+          regarding how I experienced the lyrics of <em>Inside.</em>
+        </p>
+      </div>
+      <img class="poster-img"
+           src="./images/2-bo-burnham-inside-poster.png"
+           alt="Bo Burnham: Inside official poster" />
+    </div>
+
+    <!-- ── Songs intro ── -->
+    <div class="section">
+      <p class="body-text justify">
+        What follows are four original Bo Burnham songs from his comedy special,
+        <em>Bo Burnham: Inside</em> and one song from his "Outtakes" version of
+        <em>Inside</em>. I have designed the lyrics in such a way to convey the
+        underscoring themes and feelings found within Inside.
+      </p>
+    </div>
+
+    <!-- ── GIF ── -->
+    <img class="full-img bordered"
+         src="./images/white_womens_instagram.gif"
+         alt='Burnham during his song "White Woman\'s Instagram"' />
+    <p class="caption">Gif of Burnham during his song "White Woman's Instagram"</p>
+
+    <!-- ── How to experience ── -->
+    <h2 class="section-heading">How to experience the lyrics</h2>
+
+    <div class="section">
+      <p class="body-text justify">
+        The lyrics here are presented in set list order of <em>Inside</em>.<br /><br />
+        Each page containing lyrics will begin with a video of the song that is being
+        transcribed. Some videos are actual music videos from Inside while other videos
+        are audio only videos.<br /><br />
+        I recommend playing the video/audio and following along with the lyrics. After each
+        set of lyrics, there is a "Recreator's Note" where viewers can opt to read an
+        analysis/justification of decisions and inspiration. A comprehensive reflection of
+        this project can be found on a separate page.<br /><br />
+        If you have blue/red 3-D glasses handy, now is the time to find and use them
+        when prompted.
+      </p>
+    </div>
+
+    <!-- ── Lyric Pages ── -->
+    <h2 class="section-heading">Lyric Pages</h2>
+
+    <div class="rows-section">
+
+      <div class="nav-row">
+        <a href="./unpaid_intern.html" class="button-home">Unpaid Intern</a>
+        <p class="nav-row__desc">
+          Criticizing labor exploitation, while self-degrading his need to be liked and
+          appreciated, Burnham's lyrics/performance create a cacophony of noise that
+          contributes to listeners' experience of living in a world where voices are
+          constantly bombarding online platforms, all striving to be heard and stand out.
+          My work shows a literal voice-to-visual representation that exemplifies the chaos
+          Burnham delivers.
+        </p>
+      </div>
+
+      <div class="nav-row">
+        <a href="./all_time_low.html" class="button-home">All Time Low</a>
+        <p class="nav-row__desc">
+          Early in Burnham's documented mental health crisis, "All Time Low" attempts to
+          ironically describe what it's like experiencing a panic/anxiety attack. Recreated
+          lyrics use metaphoric imagery to capture "that funny feeling" of impending doom.
+        </p>
+      </div>
+
+      <div class="nav-row">
+        <a href="./welcometotheinternet.html" class="button-home">Welcome to<br />the Internet</a>
+        <p class="nav-row__desc">
+          One of Burnham's most popular songs, "Welcome to the Internet" is catchy and dark,
+          wrapped into a stellar banger. My transcribed lyrics are a meta-representation of
+          the song because they use the media/lyrical subject itself as a form of
+          communication.
+        </p>
+      </div>
+
+      <div class="nav-row">
+        <a href="./bezos2.html" class="button-home">Bezos II</a>
+        <p class="nav-row__desc">
+          While simple in lyrics, the song is laced with a condescending irony and
+          tongue-in-cheek rhetoric, built up throughout the entire special. The visual
+          lyrics lean into the ironic tones, depicting seemingly celebratory lyrics with
+          campy visuals, some grounded in internet meme-lore.
+        </p>
+      </div>
+
+      <div class="nav-row">
+        <a href="./all_eyes_on_me.html" class="button-home">All Eyes On Me<br />Outtakes</a>
+        <p class="nav-row__desc">
+          Arguably the most important song in all of <em>Inside</em>, including
+          "<em>Inside</em>: The Outtakes" because of its non-satirical plea that viewers
+          connect with Burnham. Visually represented lyrics incorporate all the
+          aforementioned styles of visualization: literal, metaphorical,
+          meta-representative, and tonal.
+        </p>
+      </div>
+
+    </div><!-- /lyric rows -->
+
+    <!-- ── Content GIF ── -->
+    <img class="full-img"
+         src="./images/made_you_content.gif"
+         alt='Burnham\'s lyrics from "Content"' />
+    <p class="caption">Gif of Burnham's lyrics from "Content"</p>
+
+    <!-- ── Other pages intro ── -->
+    <div class="section">
+      <p class="body-text justify">
+        After the lyric pages, you can find the following pages:
+      </p>
+    </div>
+
+    <!-- ── Other Pages ── -->
+    <div class="rows-section">
+
+      <div class="nav-row">
+        <a href="./research_page.html" class="button-home">Research</a>
+        <p class="nav-row__desc">
+          I offer justification for exploring Burnham's work through a multimodal lens.
+        </p>
+      </div>
+
+      <div class="nav-row">
+        <a href="./performativity_page.html" class="button-home">My<br />Performativity</a>
+        <p class="nav-row__desc">
+          This project did not solely take place on the inter-webs; it materialized into
+          the real world.
+        </p>
+      </div>
+
+      <div class="nav-row">
+        <a href="./reflection_page.html" class="button-home">Reflection</a>
+        <p class="nav-row__desc">
+          While reflection can be found throughout the "Recreator's Notes" found underneath
+          the designed lyrics, this page shares my reflection of completing the project as a
+          whole, or of elements found throughout the project (not specific to one set of
+          lyrics).
+        </p>
+      </div>
+
+      <div class="nav-row">
+        <a href="./works_cited.html" class="button-home">Works Cited</a>
+        <p class="nav-row__desc">
+          Surprise, I cited all my sources throughout the site.
+        </p>
+      </div>
+
+      <div class="nav-row">
+        <a href="./thank_you.html" class="button-home">Thank You</a>
+        <p class="nav-row__desc">
+          As you might imagine, I thank key people who helped make this project happen.
+        </p>
+      </div>
+
+    </div><!-- /other rows -->
+
+    <!-- ── CTA "I'm Ready Now" image ── -->
+    <a href="./unpaid_intern.html" style="text-decoration: none; width: 100%;">
+      <img class="cta-img"
+           src="./images/3-i-m-ready-now_.png"
+           alt="I'm Ready Now" />
+    </a>
+
+  </main>
+
+  <!-- ── Bottom Orange Banner ── -->
+  <div class="banner-bottom"></div>
+
+</body>
+</html>

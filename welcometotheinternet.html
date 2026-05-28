@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to the Internet — Bo Burnham: Inside</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inder&family=Jost:ital,wght@0,400;1,400&family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Design Tokens ── */
+    :root {
+      --blue-gradient:
+        linear-gradient(to bottom right, #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    right  / 50% 50% no-repeat;
+      --orange-gradient:
+        linear-gradient(to bottom right, rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    right  / 50% 50% no-repeat;
+
+      --font-body:    'Jost', sans-serif;
+      --font-title:   'Press Start 2P', monospace;
+      --font-heading: 'Inder', sans-serif;
+
+      --text-sm:   0.9375rem;
+      --text-lg:   1.5625rem;
+      --text-2xl:  4rem;
+      /* Press Start 2P reads small — keep it generous */
+      --text-hero: clamp(1.25rem, 5vw, 5rem); /* 80px max */
+
+      --wide-w: 1100px;
+      --pad-x:  clamp(1rem, 5vw, 2rem);
+      --gap:    clamp(1.5rem, 4vw, 2.5rem);
+
+      --btn-bg:     rgba(77, 197, 255, 0.30);
+      --btn-border: #3EA1D1;
+      --btn-hover:  rgba(255, 136, 77, 0.37);
+    }
+
+    /* ── Base ── */
+    body {
+      background: white;
+      font-family: var(--font-body);
+      font-weight: 400;
+      color: black;
+      line-height: 1.6;
+    }
+
+    /* ── Top Banner with title ── */
+    .banner-top {
+      position: relative;
+      width: 100%;
+      /* Press Start 2P title is tall — give the banner room */
+      min-height: clamp(200px, 28vw, 474px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .banner-top::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.75;
+      background: linear-gradient(135deg, #4DC5FF 0%, #4BC0F9 40%, #3EA1D1 100%);
+      z-index: 0;
+    }
+    .banner-top .page-title,
+    .banner-top .site-title,
+    .banner-top .page-title,
+    .banner-top .banner-top__content,
+    .banner-top .title-card {
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-title {
+      font-family: var(--font-title);
+      font-size: var(--text-hero);
+      font-weight: 400;
+      text-align: center;
+      /* Press Start 2P needs generous line-height */
+      line-height: 1.9;
+      padding: clamp(1rem, 3vw, 2rem) var(--pad-x);
+    }
+
+    /* ── Bottom Banner ── */
+    .banner-bottom {
+      width: 100%;
+      height: clamp(60px, 10vw, 165px);
+      opacity: 0.75;
+      background: var(--orange-gradient);
+    }
+
+    /* ── Main content ── */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--gap);
+      padding-block: var(--gap);
+    }
+
+    /* ── Section wrapper ── */
+    .section--wide {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Section heading ── */
+    .section-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 6vw, var(--text-2xl));
+      font-weight: 400;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* ── Body text ── */
+    .body-text {
+      font-size: clamp(1rem, 2.5vw, var(--text-lg));
+      line-height: 1.6;
+      text-align: justify;
+    }
+    .body-text p + p { margin-top: 1.25rem; }
+
+    /* ── YouTube iframe ── */
+    .video-wrap {
+      width: 100%;
+      max-width: 560px;
+      padding-inline: var(--pad-x);
+      margin-inline: auto;
+    }
+    .video-wrap .ratio {
+      position: relative;
+      padding-top: 56.25%;
+    }
+    .video-wrap .ratio iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ── Lyric images ── */
+    /*    Each image preserves its original aspect ratio via height:auto    */
+    /*    and is capped at its native width so it never stretches wider     */
+    .lyric-img {
+      display: block;
+      height: auto;
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+
+    /* Portrait images (tall) */
+    .lyric-img--w632  { width: 100%; max-width: 632px;  }
+    .lyric-img--w634  { width: 100%; max-width: 634px;  }
+    .lyric-img--w635  { width: 100%; max-width: 635px;  }
+
+    /* Landscape / wide images */
+    .lyric-img--w940  { width: 100%; max-width: 940px;  }
+    .lyric-img--w1212 { width: 100%; max-width: 1212px; }
+    .lyric-img--w1239 { width: 100%; max-width: 1239px; }
+    .lyric-img--w1398 { width: 100%; max-width: 1398px; }
+
+    /* ── Page nav ── */
+    .page-nav {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    .page-nav__row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .page-nav__col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .page-nav__label {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 400;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .page-nav__center {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* ── Button ── */
+    .button-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+
+      width: clamp(140px, 20vw, 193px);
+      min-height: 72px;
+      padding: 10px 14px;
+      flex-shrink: 0;
+
+      background: var(--btn-bg);
+      border-radius: 35px;
+      outline: 4px solid var(--btn-border);
+      outline-offset: -4px;
+
+      color: black;
+      font-size: clamp(0.9rem, 1.8vw, 1.6875rem);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.4;
+      word-break: break-word;
+
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .button-home:hover {
+      background: var(--btn-hover);
+      transform: scale(1.05);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .page-nav__row {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .button-home { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Top Blue Banner with Page Title ── -->
+  <div class="banner-top">
+    <h1 class="page-title">Welcome<br />to the<br />Internet</h1>
+  </div>
+
+  <main>
+
+    <!-- ── YouTube embed ── -->
+    <div class="video-wrap">
+      <div class="ratio">
+        <iframe
+          src="https://www.youtube.com/embed/k1BneeJTDcU"
+          title='Welcome to the Internet - Bo Burnham (from "Inside")'
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <!-- ── Lyric images in original order ── -->
+
+    <!-- 1: Early internet GIF -->
+    <img class="lyric-img lyric-img--w632"
+         src="./images/1-welcome_to_the_internet.gif"
+         alt="Welcome to the Internet lyric image 1" />
+
+    <!-- 2: Internet Explorer browser -->
+    <img class="lyric-img lyric-img--w940"
+         src="./images/2-internet_explorer.jpg"
+         alt="Welcome to the Internet lyric image 2 — Internet Explorer" />
+
+    <!-- 3: AOL chat room -->
+    <img class="lyric-img lyric-img--w634"
+         src="./images/3-aol_chat_publisher_file.jpg"
+         alt="Welcome to the Internet lyric image 3 — AOL chat" />
+
+    <!-- 4: See a man beheaded -->
+    <img class="lyric-img lyric-img--w1239"
+         src="./images/4-see_a_man_beheaded.png"
+         alt="Welcome to the Internet lyric image 4" />
+
+    <!-- 5: Incognito mode -->
+    <img class="lyric-img lyric-img--w1212"
+         src="./images/5-incognito_mode_final.png"
+         alt="Welcome to the Internet lyric image 5 — Incognito mode" />
+
+    <!-- 6: Clippy -->
+    <img class="lyric-img lyric-img--w940"
+         src="./images/6-clippy.png"
+         alt="Welcome to the Internet lyric image 6 — Clippy" />
+
+    <!-- 7: Phone screen (portrait) -->
+    <img class="lyric-img lyric-img--w635"
+         src="./images/7-unstoppable,_watchable_phone_screen.png"
+         alt="Welcome to the Internet lyric image 7 — phone screen" />
+
+    <!-- 8: Final wide image (AI / ChatGPT era) -->
+    <img class="lyric-img lyric-img--w1398"
+         src="./images/8-real_last_picturepicture1.png"
+         alt="Welcome to the Internet lyric image 8" />
+
+    <!-- ── Recreator's Note ── -->
+    <h2 class="section-heading">Recreator's Note</h2>
+
+    <div class="section--wide">
+      <div class="body-text">
+        <p>In the music video, Burnham presents himself as a villainous snake oil salesperson
+        archetype, wearing round, black/mirrored sunglasses, and never revealing his eyes.
+        The room is dark with little green lights projected across him. The lyrics epitomize
+        the carefully crafted destructive nature of the internet, highlighting the vast array
+        of silly, innocent, manipulative, and horrific things that can be found online and,
+        more importantly, how it's a distraction from our real responsibilities.</p>
+
+        <p>I refer to the method of using the subject of the song as the way through which to
+        display the lyrics as meta-representation.</p>
+
+        <p>After completing the first set of lyrics ("'Unpaid Intern' — Reaction Video"), when
+        I decided to expand this idea into a more comprehensive project rhetorically displaying
+        Burnham's lyrics, "Welcome to the Internet" was the first song that came to mind. It
+        was, by far, the easiest idea to conceive and hardest one to execute. It pushed my
+        limited knowledge of picture editing. I knew immediately I wanted to lean into this
+        meta-representation of how we engage with the internet, which meant paying careful
+        attention to common ways the internet was experienced.</p>
+
+        <p>The images I used for the lyrics play into the deep-seated integration of the
+        internet in our society. I used a timeline of what the internet used to look like,
+        starting with early internet iterations of UNIX, moving into circa mid-90s Internet
+        Explorer, followed closely by AOL-type chat rooms. Then browsers that are familiar
+        to readers now (in 2025), particularly tracking search histories, then using incognito
+        mode to "hide" from tracking cookies. In the middle of the song, Burnham inserts a
+        monologue, and "someone" needed to be the presenter. Using Microsoft's virtual
+        assistant "Clippy," though outdated, seemed like the right fit since most readers
+        over 30 or so would recognize Clippy and understand the underscoring connotations
+        that he's there "to help" (or maybe monitor?). After Clippy, I wanted to transition
+        into more modern forms of engaging with the internet, via handheld devices, hence the
+        screenshot of a phone's app, and finally, concluding with the rise of AI,
+        specifically ChatGPT.</p>
+
+        <p>To me, it was important to keep the aspect ratios unique to each mode of
+        communication/engagement, so the computer browsers are wide and landscape, while my
+        phone screenshot is zoomed in and portrait. I wanted readers to experience the
+        pictures in the same way they would browsing the internet on their own. In a way,
+        displaying Burnham's lyrics in this manner is like holding up a mirror to the readers,
+        asking them to reflect upon their internet usage.</p>
+      </div>
+    </div>
+
+    <!-- ── Page navigation ── -->
+    <nav class="page-nav" aria-label="Page navigation">
+
+      <div class="page-nav__row">
+        <div class="page-nav__col">
+          <span class="page-nav__label">BACK</span>
+          <a href="./all_time_low.html" class="button-home">All Time Low</a>
+        </div>
+        <div class="page-nav__col">
+          <span class="page-nav__label">NEXT</span>
+          <a href="./bezos2.html" class="button-home">Bezos II</a>
+        </div>
+      </div>
+
+      <div class="page-nav__center">
+        <a href="./context_homepage.html" class="button-home">Go Home</a>
+      </div>
+
+    </nav>
+
+  </main>
+
+  <!-- ── Bottom Orange Banner ── -->
+  <div class="banner-bottom"></div>
+
+</body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>"Unpaid Intern" Reaction Video — Bo Burnham: Inside</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inder&family=Just+Another+Hand&family=Jost:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Design Tokens ── */
+    :root {
+      --blue-gradient:
+        linear-gradient(to bottom right, #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    right  / 50% 50% no-repeat;
+      --orange-gradient:
+        linear-gradient(to bottom right, rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    right  / 50% 50% no-repeat;
+
+      --font-body:    'Jost', sans-serif;
+      --font-title:   'Just Another Hand', cursive;
+      --font-heading: 'Inder', sans-serif;
+
+      --text-sm:   0.9375rem;
+      --text-lg:   1.5625rem;
+      --text-2xl:  4rem;
+      --text-hero: clamp(2.5rem, 8vw, 6.25rem); /* 100px max */
+
+      --max-w:  900px;
+      --wide-w: 1100px;
+      --pad-x:  clamp(1rem, 5vw, 2rem);
+      --gap:    clamp(1.5rem, 4vw, 2.5rem);
+
+      --btn-bg:     rgba(77, 197, 255, 0.30);
+      --btn-border: #3EA1D1;
+      --btn-hover:  rgba(255, 136, 77, 0.37);
+    }
+
+    /* ── Base ── */
+    body {
+      background: white;
+      font-family: var(--font-body);
+      font-weight: 400;
+      color: black;
+      line-height: 1.6;
+    }
+
+    /* ── Top Banner with title ── */
+    .banner-top {
+      position: relative;
+      width: 100%;
+      min-height: clamp(140px, 20vw, 427px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .banner-top::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.75;
+      background: linear-gradient(135deg, #4DC5FF 0%, #4BC0F9 40%, #3EA1D1 100%);
+      z-index: 0;
+    }
+    .banner-top .page-title,
+    .banner-top .site-title,
+    .banner-top .page-title,
+    .banner-top .banner-top__content,
+    .banner-top .title-card {
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-title {
+      font-family: var(--font-title);
+      font-size: var(--text-hero);
+      font-weight: 400;
+      text-align: center;
+      line-height: 1.5;
+      padding: clamp(1rem, 3vw, 2rem) var(--pad-x);
+    }
+
+    /* ── Bottom Banner ── */
+    .banner-bottom {
+      width: 100%;
+      height: clamp(60px, 10vw, 165px);
+      opacity: 0.75;
+      background: var(--orange-gradient);
+    }
+
+    /* ── Main content ── */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--gap);
+      padding-block: var(--gap);
+    }
+
+    /* ── Section wrappers ── */
+    .section--wide {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Section heading ── */
+    .section-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 6vw, var(--text-2xl));
+      font-weight: 400;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* ── Body text ── */
+    .body-text {
+      font-size: clamp(1rem, 2.5vw, var(--text-lg));
+      line-height: 1.6;
+      text-align: justify;
+    }
+    .body-text p + p { margin-top: 1.25rem; }
+
+    /* ── YouTube iframe ── */
+    .video-wrap {
+      width: 100%;
+      max-width: 560px;
+      padding-inline: var(--pad-x);
+      margin-inline: auto;
+    }
+    .video-wrap .ratio {
+      position: relative;
+      padding-top: 56.25%;
+    }
+    .video-wrap .ratio iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ── Lyric image stack — flush, no gaps ── */
+    .lyric-stack {
+      width: 100%;
+      max-width: 1376px;        /* widest image sets the cap */
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      line-height: 0;           /* removes inline-block whitespace */
+    }
+    .lyric-stack img {
+      display: block;           /* eliminates bottom whitespace gap */
+      width: 100%;
+      height: auto;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ── Standalone lyric images (example image) ── */
+    .lyric-img {
+      display: block;
+      height: auto;
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+    .lyric-img--w1194 { width: 100%; max-width: 1194px; }
+    .lyric-img--w1367 { width: 100%; max-width: 1367px; }
+    .lyric-img--w1376 { width: 100%; max-width: 1376px; }
+    .lyric-img--w1223 { width: 100%; max-width: 1223px; }
+
+    /* ── Page nav ── */
+    .page-nav {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    .page-nav__row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .page-nav__col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .page-nav__label {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 400;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .page-nav__center {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* ── Button ── */
+    .button-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+
+      width: clamp(140px, 20vw, 193px);
+      min-height: 72px;
+      padding: 10px 14px;
+      flex-shrink: 0;
+
+      background: var(--btn-bg);
+      border-radius: 35px;
+      outline: 4px solid var(--btn-border);
+      outline-offset: -4px;
+
+      color: black;
+      font-size: clamp(0.9rem, 1.8vw, 1.6875rem);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.4;
+      word-break: break-word;
+
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .button-home:hover {
+      background: var(--btn-hover);
+      transform: scale(1.05);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .page-nav__row {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .button-home { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Top Blue Banner with Page Title ── -->
+  <div class="banner-top">
+    <h1 class="page-title">"Unpaid Intern"<br />Reaction Video</h1>
+  </div>
+
+  <main>
+
+    <!-- ── YouTube embed ── -->
+    <div class="video-wrap">
+      <div class="ratio">
+        <iframe
+          src="https://www.youtube.com/embed/FZVMB8mrNO0"
+          title='Bo Burnham: "Unpaid Intern" Reaction Video'
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <!-- ── Lyric image sequence (flush stacked, no gaps) ── -->
+    <div class="lyric-stack">
+      <img src="./images/unpaid_intern_visualized_1-jpeg.jpg"
+           alt="Unpaid Intern visualized lyrics — part 1" />
+      <img src="./images/unpaid_intern_visualized_2-jpeg.jpg"
+           alt="Unpaid Intern visualized lyrics — part 2" />
+      <img src="./images/unpaid_intern_visualized_3-better.jpg"
+           alt="Unpaid Intern visualized lyrics — part 3" />
+      <img src="./images/unpaid_intern_visualized_4-jpeg.jpg"
+           alt="Unpaid Intern visualized lyrics — part 4" />
+      <img src="./images/unpaid_intern_visualized_5-jpeg.jpg"
+           alt="Unpaid Intern visualized lyrics — part 5" />
+    </div>
+
+    <!-- ── Recreator's Note ── -->
+    <h2 class="section-heading">Recreator's Note</h2>
+
+    <div class="section--wide">
+      <div class="body-text">
+        <p>This song/snippet appears in the first half of the special, following a rant
+        about how people can't stop sharing their opinions about everything. The
+        "'Unpaid Intern'" clip is particularly ironic because it follows that rant. Burnham
+        literally "does the thing" he's frustrated about — a classic speech act — he can't
+        stop talking and has something to say all the time. In fact, he has many things to
+        say, without actually contributing anything.</p>
+
+        <p>This clip begins with a short song detailing the exploitation of unpaid interns
+        in the corporate world. The video then cuts to Burnham "reacting" to that song. The
+        reaction video then starts to repeat, causing the narrating Burnham to have to react
+        to his reaction, over the course of several repetitions. His reaction narration turns
+        self-deprecating, ultimately criticizing himself for needing to be liked and making
+        excuses for his behavior/comments. Because the song and the numerous running
+        commentary videos play simultaneously, I felt this was a prime example of how
+        traditionally formatted closed captioning can misrepresent, or even miss entirely,
+        key elements of the media.</p>
+
+        <p>In an episode of <em>This Rhetorical Life</em> (2015) discussing captioning, Sean
+        Zdenek argues that captioning needs to be driven by rhetorical purpose, genre, context,
+        and audience needs. I argue that the literal cacophony of voices in the "'Unpaid
+        Intern' Reaction Video" snippet is the primary purpose in this video, yet the captions
+        only display the "main" narration voice. By providing all the words said by the various
+        iterations of the reacting Burnhams and presenting the changing tone of the "main"
+        narrator through color and font choices, my lyrical presentation seeks to visually
+        convey Burnham's purpose of showcasing all the many voices that can't stop talking.</p>
+
+        <p>The font styles become progressively more unsettling, beginning with a neutral font
+        in orange, then adding a more personal, handwritten font in blue (making these
+        complementary colors to indicate the original, unassuming beginning of the piece).
+        Next a dark purple, an analogous color to blue, with a font similar but more jagged
+        and harsh. Next is green, with a font that changes the angles and line weights of
+        letters to seem disjointed and inconsistent, ending with a dark, blood red font that
+        looks like blood dripping down — thicker at the top of the letters, narrowing toward
+        the bottom. It's meant to stand out against the other voices to emphasize Burnham's
+        insistence that he wants to stop the noise — his noise. The noise he himself is
+        making.</p>
+
+        <p>The line placement correlates with the timing of the said line. For example, in
+        the first narration, the blue text begins before the orange text because that narrated
+        line begins speaking before the orange line is sung. The same rule is true for lines
+        found after the lyrics. Presenting the lines in relation to timing of each other on
+        the left-right axis helps the reader spatially see the aural relationship of the
+        lyrics/narration.</p>
+
+        <p>When I was thinking about how to capture the auditory experience of this piece in
+        a visual way, I wanted readers to experience disorientation and over-stimulation. I
+        thought about overlaying words on top of each other to mimic the overlaying of sounds.
+        Something like this:</p>
+      </div>
+    </div>
+
+    <!-- ── Overlapping text example image ── -->
+    <img class="lyric-img lyric-img--w1223"
+         src="./images/singleline_example_6.png"
+         alt="Example of overlapping lyric lines" />
+
+    <!-- ── Closing note ── -->
+    <div class="section--wide">
+      <div class="body-text">
+        <p>While this example illustrates the overlapping lines of dialogue, viewers might
+        just see it as multi-layered text, nearly indecipherable to read, and give up trying
+        to read it. Giving up trying defeats the purpose of captions/writing out the lyrics —
+        you know, to read the lyrics. Instead, I wanted to format the lyrics in a way that
+        the individual words are clearly seen and the speaker of the words is clearly
+        identified, hence my using of multi-colors/fonts. But I didn't think the
+        multi-colors/fonts were enough chaos to encapsulate the tone of the piece. Line
+        proximity had to be the method with which to enact the cacophony of noise.</p>
+
+        <p>I started by writing out the song lyrics, with a lot of space between them. Then
+        when the dialogue begins, line by line, literally second by second, I typed out the
+        text of the first Burnham speaker, being sure to align and anchor them to words in
+        the song lyrics. The same process happened as each new speaker enters the video. I
+        probably listened to that video for three hours. It was tedious work.</p>
+
+        <p>When I was done making a digital file that shows multi-colors/fonts aligned and
+        anchored together, I had to laugh.</p>
+
+        <p>This particular lyric set was the first thing I did for this entire project. And
+        it was for a class discussion board. Not even a major assignment. Approximately 6
+        hours of my life went to this creation — all for about 3% of a grade in a Rhetorical
+        Theory class. But hey, it led me to investigate Burnham more closely and opened up
+        space for more creative, yet rhetorical, displays of his lyrics.</p>
+      </div>
+    </div>
+
+    <!-- ── Page navigation ── -->
+    <nav class="page-nav" aria-label="Page navigation">
+
+      <div class="page-nav__row">
+        <div class="page-nav__col">
+          <span class="page-nav__label">BACK</span>
+          <a href="./context_homepage.html" class="button-home">Go Home</a>
+        </div>
+        <div class="page-nav__col">
+          <span class="page-nav__label">NEXT</span>
+          <a href="./all_time_low.html" class="button-home">All Time Low</a>
+        </div>
+      </div>
+
+    </nav>
+
+  </main>
+
+  <!-- ── Bottom Orange Banner ── -->
+  <div class="banner-bottom"></div>
+
+</body>
+</html>

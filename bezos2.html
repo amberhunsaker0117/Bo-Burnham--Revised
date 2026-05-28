@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bezos II — Bo Burnham: Inside</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inder&family=Jost:ital,wght@0,400;1,400&family=Kaushan+Script&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Design Tokens ── */
+    :root {
+      --blue-gradient:
+        linear-gradient(to bottom right, #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    right  / 50% 50% no-repeat;
+      --orange-gradient:
+        linear-gradient(to bottom right, rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    right  / 50% 50% no-repeat;
+
+      --font-body:    'Jost', sans-serif;
+      --font-title:   'Kaushan Script', cursive;
+      --font-heading: 'Inder', sans-serif;
+
+      --text-sm:   0.9375rem;
+      --text-lg:   1.5625rem;
+      --text-2xl:  4rem;
+      --text-hero: clamp(3rem, 12vw, 11.25rem); /* 180px max */
+
+      --max-w:  1000px;   /* matches widest lyric images */
+      --wide-w: 1100px;
+      --pad-x:  clamp(1rem, 5vw, 2rem);
+      --gap:    clamp(1rem, 3vw, 2rem);
+
+      --btn-bg:     rgba(77, 197, 255, 0.30);
+      --btn-border: #3EA1D1;
+      --btn-hover:  rgba(255, 136, 77, 0.37);
+    }
+
+    /* ── Base ── */
+    body {
+      background: white;
+      font-family: var(--font-body);
+      font-weight: 400;
+      color: black;
+      line-height: 1.6;
+    }
+
+    /* ── Top Banner with title ── */
+    .banner-top {
+      position: relative;
+      width: 100%;
+      min-height: clamp(120px, 18vw, 315px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .banner-top::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.75;
+      background: linear-gradient(135deg, #4DC5FF 0%, #4BC0F9 40%, #3EA1D1 100%);
+      z-index: 0;
+    }
+    .banner-top .page-title,
+    .banner-top .site-title,
+    .banner-top .page-title,
+    .banner-top .banner-top__content,
+    .banner-top .title-card {
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-title {
+      font-family: var(--font-title);
+      font-size: var(--text-hero);
+      font-weight: 400;
+      text-align: center;
+      line-height: 1.5;
+      padding: clamp(0.5rem, 2vw, 1.5rem) var(--pad-x);
+    }
+
+    /* ── Bottom Banner ── */
+    .banner-bottom {
+      width: 100%;
+      height: clamp(60px, 10vw, 165px);
+      opacity: 0.75;
+      background: var(--orange-gradient);
+    }
+
+    /* ── Main content ── */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--gap);
+      padding-block: var(--gap);
+    }
+
+    /* ── Section wrappers ── */
+    .section--wide {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Section heading ── */
+    .section-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 6vw, var(--text-2xl));
+      font-weight: 400;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* ── Body text ── */
+    .body-text {
+      font-size: clamp(1rem, 2.5vw, var(--text-lg));
+      line-height: 1.6;
+    }
+    .body-text.justify { text-align: justify; }
+    .body-text p + p   { margin-top: 1.25rem; }
+
+    /* ── YouTube iframe — non-standard tall ratio for this song ── */
+    /*    Original: 1000×159px ≈ 6.29:1 aspect ratio               */
+    .video-wrap {
+      width: 100%;
+      max-width: var(--max-w);
+      padding-inline: var(--pad-x);
+      margin-inline: auto;
+    }
+    .video-wrap .ratio {
+      position: relative;
+      padding-top: 15.9%; /* 159/1000 = 15.9% — preserves original widescreen bar */
+    }
+    .video-wrap .ratio iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ── Lyric / GIF images ── */
+    /*    Each image is centered and capped at its original width.  */
+    /*    They scale down on smaller screens automatically.         */
+    .lyric-img {
+      display: block;
+      margin-inline: auto;
+      height: auto;
+      padding-inline: var(--pad-x);
+    }
+
+    /* Individual max-widths matching original artwork dimensions */
+    .lyric-img--w1000 { width: 100%; max-width: 1000px; }
+    .lyric-img--w783  { width: 100%; max-width: 783px;  }
+    .lyric-img--w944  { width: 100%; max-width: 944px;  }
+    .lyric-img--w894  { width: 100%; max-width: 894px;  }
+    .lyric-img--w625  { width: 100%; max-width: 625px;  }
+    .lyric-img--w800  { width: 100%; max-width: 800px;  }
+    .lyric-img--w501  { width: 100%; max-width: 501px;  }
+
+    /* ── Page nav ── */
+    .page-nav {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    .page-nav__row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .page-nav__col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .page-nav__label {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 400;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .page-nav__center {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* ── Button ── */
+    .button-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+
+      width: clamp(140px, 20vw, 193px);
+      min-height: 72px;
+      padding: 10px 14px;
+      flex-shrink: 0;
+
+      background: var(--btn-bg);
+      border-radius: 35px;
+      outline: 4px solid var(--btn-border);
+      outline-offset: -4px;
+
+      color: black;
+      font-size: clamp(0.9rem, 1.8vw, 1.6875rem);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.4;
+      word-break: break-word;
+
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .button-home:hover {
+      background: var(--btn-hover);
+      transform: scale(1.05);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .page-nav__row {
+        flex-direction: column;
+        align-items: center;
+      }
+      /* Taller ratio on very small screens so audio bar is still usable */
+      .video-wrap .ratio {
+        padding-top: 40%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .button-home { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Top Blue Banner with Page Title ── -->
+  <div class="banner-top">
+    <h1 class="page-title">Bezos II</h1>
+  </div>
+
+  <main>
+
+    <!-- ── YouTube audio/video embed ── -->
+    <!--    Original was a very wide, short bar (1000×159px)        -->
+    <div class="video-wrap">
+      <div class="ratio">
+        <iframe
+          src="https://www.youtube.com/embed/ebkAM2_zsEk"
+          title="Bezos II"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <!-- ── Lyric GIF / image sequence ── -->
+    <!-- Images 1–16 in original order, each capped at its native width -->
+
+    <img class="lyric-img lyric-img--w1000"
+         src="./images/1-bezos_gifs.gif"
+         alt="Bezos II lyric image 1" />
+
+    <img class="lyric-img lyric-img--w1000"
+         src="./images/2-bezos_gifs.gif"
+         alt="Bezos II lyric image 2" />
+
+    <img class="lyric-img lyric-img--w1000"
+         src="./images/3-bezos_gifs.gif"
+         alt="Bezos II lyric image 3" />
+
+    <img class="lyric-img lyric-img--w501"
+         src="./images/4-ugh.png"
+         alt="Bezos II lyric image 4" />
+
+    <img class="lyric-img lyric-img--w1000"
+         src="./images/5-bezos_gifs.gif"
+         alt="Bezos II lyric image 5" />
+
+    <img class="lyric-img lyric-img--w1000"
+         src="./images/6-bezos_gifs.gif"
+         alt="Bezos II lyric image 6" />
+
+    <img class="lyric-img lyric-img--w783"
+         src="./images/7-bezos_gifs.gif"
+         alt="Bezos II lyric image 7" />
+
+    <img class="lyric-img lyric-img--w944"
+         src="./images/8-bezos_gif.png"
+         alt="Bezos II lyric image 8" />
+
+    <img class="lyric-img lyric-img--w894"
+         src="./images/9-bezos_gifs.gif"
+         alt="Bezos II lyric image 9" />
+
+    <img class="lyric-img lyric-img--w1000"
+         src="./images/10-bezos_gif.gif"
+         alt="Bezos II lyric image 10" />
+
+    <img class="lyric-img lyric-img--w1000"
+         src="./images/11-bezos_gifs.gif"
+         alt="Bezos II lyric image 11" />
+
+    <img class="lyric-img lyric-img--w625"
+         src="./images/12-bezos_gif.gif"
+         alt="Bezos II lyric image 12" />
+
+    <img class="lyric-img lyric-img--w1000"
+         src="./images/13-bezos_gifs.gif"
+         alt="Bezos II lyric image 13" />
+
+    <img class="lyric-img lyric-img--w1000"
+         src="./images/14-bezos_gif.gif"
+         alt="Bezos II lyric image 14" />
+
+    <img class="lyric-img lyric-img--w800"
+         src="./images/15-bezos_gifs.gif"
+         alt="Bezos II lyric image 15" />
+
+    <img class="lyric-img lyric-img--w800"
+         src="./images/16-bezos_gifs.gif"
+         alt="Bezos II lyric image 16" />
+
+    <!-- ── Recreator's Note ── -->
+    <h2 class="section-heading">Recreator's Note</h2>
+
+    <div class="section--wide">
+      <div class="body-text justify">
+        <p>As the name implies, this is the second "Bezos" song, consisting of limited,
+        but repeated, lyrics. As with the first Bezos song, "Bezos II" drips with irony
+        and sarcasm celebrating Amazon CEO Jeffrey Bezos's success of being the richest
+        person alive, having heavily profited during the COVID-19 pandemic. "Bezos II"
+        appears to be a song that worships Bezos, chanting his name, encouraging and
+        offering congratulations. However, in the context of this comedy special that
+        criticizes capitalist greed, listeners can quickly presume that Burnham is not,
+        in fact, a fan of Jeffrey Bezos. This song is a parody of an "underdog story,"
+        meant to make viewers think that Jeffrey Bezos, one of the wealthiest men ever to
+        live, somehow needs encouragement or persuasion to keep fighting for success.</p>
+
+        <p>My lyrics are meant to convey the absolutely cheesiest, cringiest ways to format
+        the repeated lyric to really bring forward the tongue-in-cheekiness. Between the
+        chanting of the name, Burnham inserts gratifying sounds and words of affirmation.
+        While the act of putting together the lyrics for this song was easy, it was
+        particularly difficult to format those lyrics in a very obviously ironic way. I used
+        popular internet memes/gifs that carry with them ironic, even campy, connotations.
+        Using a host of memes seems relevant since Burnham gained his fame from being a
+        YouTube star. Many fans would appreciate the history and use of memes within the
+        Burnham lyrics.</p>
+
+        <p>First, I used the "Feel Good" meme, where an outline of a man touching his face
+        is fraught with ironic satisfaction. Second, admittedly, I altered the star image
+        that usually says "you did it," yet again an ironic image because of the "blursed"
+        (a portmanteau of blessed and cursed) star that is terribly wrong, but looks as if
+        someone tried their pitiful best. Third, a gif from Adult Swim's
+        <em>Children's Hospital</em> underscores the sarcastic tone of excitement by showing
+        a character throwing confetti up in celebration that his TV show was canceled. Last
+        is word art to highlight the over-the-top-ness by making the last syllable huge and
+        tacky, like the rest of the Jeffrey Bezos gifs.</p>
+      </div>
+    </div>
+
+    <!-- ── Page navigation ── -->
+    <nav class="page-nav" aria-label="Page navigation">
+
+      <div class="page-nav__row">
+        <div class="page-nav__col">
+          <span class="page-nav__label">BACK</span>
+          <a href="./welcometotheinternet.html" class="button-home">Welcome to<br />the Internet</a>
+        </div>
+        <div class="page-nav__col">
+          <span class="page-nav__label">NEXT</span>
+          <a href="./all_eyes_on_me.html" class="button-home">All Eyes On Me<br />Outtakes</a>
+        </div>
+      </div>
+
+      <div class="page-nav__center">
+        <a href="./context_homepage.html" class="button-home">Go Home</a>
+      </div>
+
+    </nav>
+
+  </main>
+
+  <!-- ── Bottom Orange Banner ── -->
+  <div class="banner-bottom"></div>
+
+</body>
+</html>

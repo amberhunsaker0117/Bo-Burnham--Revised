@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reflection — Bo Burnham: Inside</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inder&family=Jost:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Design Tokens ── */
+    :root {
+      --blue-gradient:
+        linear-gradient(to bottom right, #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    right  / 50% 50% no-repeat;
+      --orange-gradient:
+        linear-gradient(to bottom right, rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    right  / 50% 50% no-repeat;
+
+      --font-body:    'Jost', sans-serif;
+      --font-heading: 'Inder', sans-serif;
+
+      --text-sm:      0.9375rem;
+      --text-lg:      1.5625rem;
+      --text-hero:    clamp(3rem, 10vw, 8.125rem); /* 130px max */
+
+      --max-w:  900px;
+      --wide-w: 1100px;
+      --pad-x:  clamp(1rem, 5vw, 2rem);
+      --gap:    clamp(1.5rem, 4vw, 2.5rem);
+
+      --btn-bg:     rgba(77, 197, 255, 0.30);
+      --btn-border: #3EA1D1;
+      --btn-hover:  rgba(255, 136, 77, 0.37);
+      --purple:     #9747FF;
+    }
+
+    /* ── Base ── */
+    body {
+      background: white;
+      font-family: var(--font-body);
+      font-weight: 400;
+      color: black;
+      line-height: 1.6;
+    }
+
+    /* ── Top Blue Banner ── */
+    .banner-top {
+      position: relative;
+      width: 100%;
+      min-height: clamp(160px, 22vw, 469px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .banner-top::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.75;
+      background: linear-gradient(135deg, #4DC5FF 0%, #4BC0F9 40%, #3EA1D1 100%);
+      z-index: 0;
+    }
+    .banner-top .page-title,
+    .banner-top .site-title,
+    .banner-top .page-title,
+    .banner-top .banner-top__content,
+    .banner-top .title-card {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── "Reflection" title card with mirror effect ── */
+    /*    Original: purple-bordered box with blurred flipped text   */
+    .title-card {
+      border: 1px solid var(--purple);
+      border-radius: 5px;
+      overflow: hidden;
+      padding: clamp(0.75rem, 2vw, 1.25rem) clamp(1rem, 3vw, 2rem);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* Card width scales with viewport, capped at 585px */
+      width: clamp(260px, 80vw, 585px);
+    }
+
+    /* Main "Reflection" word */
+    .title-card__main {
+      font-family: var(--font-body);
+      font-size: var(--text-hero);
+      font-weight: 400;
+      text-align: center;
+      line-height: 1.5;
+      color: black;
+      display: block;
+    }
+
+    /* Mirror / reflection text beneath */
+    .title-card__mirror {
+      font-family: var(--font-body);
+      font-size: var(--text-hero);
+      font-weight: 400;
+      text-align: center;
+      line-height: 0.75;
+      color: black;
+      opacity: 1;
+      filter: blur(2px);
+      /* Flip vertically to simulate a reflection */
+      transform: scaleY(-1);
+      display: block;
+      /* Clip so only the top portion of the flipped text shows */
+      max-height: clamp(2rem, 6vw, 5rem);
+      overflow: hidden;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ── Bottom Orange Banner ── */
+    .banner-bottom {
+      width: 100%;
+      height: clamp(60px, 10vw, 165px);
+      opacity: 0.75;
+      background: var(--orange-gradient);
+    }
+
+    /* ── Main content ── */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--gap);
+      padding-block: var(--gap);
+    }
+
+    /* ── Section wrappers ── */
+    .section--wide {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Body text ── */
+    .body-text {
+      font-size: clamp(1rem, 2.5vw, var(--text-lg));
+      line-height: 1.6;
+      text-align: justify;
+    }
+    .body-text p + p { margin-top: 1.25rem; }
+
+    /* ── GIF ── */
+    .full-img {
+      width: 100%;
+      max-width: 640px;
+      height: auto;
+      display: block;
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Page nav ── */
+    .page-nav {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    .page-nav__row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .page-nav__col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .page-nav__label {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 400;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .page-nav__center {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* ── Button ── */
+    .button-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+
+      width: clamp(140px, 20vw, 193px);
+      min-height: 72px;
+      padding: 10px 14px;
+      flex-shrink: 0;
+
+      background: var(--btn-bg);
+      border-radius: 35px;
+      outline: 4px solid var(--btn-border);
+      outline-offset: -4px;
+
+      color: black;
+      font-size: clamp(0.9rem, 1.8vw, 1.6875rem);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.4;
+      word-break: break-word;
+
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .button-home:hover {
+      background: var(--btn-hover);
+      transform: scale(1.05);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .page-nav__row {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .button-home { transition: none; }
+      .title-card__mirror { filter: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Top Blue Banner with Title Card ── -->
+  <div class="banner-top">
+    <div class="title-card">
+      <span class="title-card__main">Reflection</span>
+      <span class="title-card__mirror" aria-hidden="true">Reflection</span>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ── Reflection text ── -->
+    <div class="section--wide">
+      <div class="body-text">
+        <p>This project was an absolute dream. I spent 5 weeks listening to some of my
+        favorite songs, from one of my favorite movies, made by one of my favorite
+        comedians. I could come home from a stressful day, listen to one of my favorite
+        songs, and call it "doing homework."</p>
+
+        <p>Since I was a teenager, I've had an ability to vividly put visuals to audio,
+        so much so that I wrote scripts of music videos for some of my favorite songs,
+        and was legitimately frustrated by most "visualizer" programs because they never
+        seem to get the visuals "quite right." Throughout the creation of this project,
+        I thought a lot about how to engage with readers. Specifically, what would make
+        things more engaging. I kept coming back to this idea that multimodal writing can
+        be a means through which "felt sense" is conveyed.</p>
+
+        <p>This project felt like a way to manifest what I "see" in my mind's eye onto
+        the screen.</p>
+
+        <p>The problems I faced wasn't coming up with ideas. It was not having computer
+        programs (and more importantly the skills) to make those ideas reality.</p>
+
+        <p>I have million dollar ideas, with dollar store skills.</p>
+      </div>
+    </div>
+
+    <!-- ── GIF ── -->
+    <img class="full-img"
+         src="./images/hi_gif-reflectionpage.gif"
+         alt="Bo Burnham gif from the reflection page" />
+
+    <!-- ── Page navigation ── -->
+    <nav class="page-nav" aria-label="Page navigation">
+
+      <div class="page-nav__row">
+        <div class="page-nav__col">
+          <span class="page-nav__label">BACK</span>
+          <a href="./performativity_page.html" class="button-home">My<br />Performativity</a>
+        </div>
+        <div class="page-nav__col">
+          <span class="page-nav__label">NEXT</span>
+          <a href="./works_cited.html" class="button-home">Works Cited</a>
+        </div>
+      </div>
+
+      <div class="page-nav__center">
+        <a href="./context_homepage.html" class="button-home">Go Home</a>
+      </div>
+
+    </nav>
+
+  </main>
+
+  <!-- ── Bottom Orange Banner ── -->
+  <div class="banner-bottom"></div>
+
+</body>
+</html>
