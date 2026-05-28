@@ -1,1 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Eyes On Me (The Outtakes Version) — Bo Burnham: Inside</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inder&family=Jost:ital,wght@0,400;1,400&family=Limelight&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Design Tokens ── */
+    :root {
+      --blue-gradient:
+        linear-gradient(to bottom right, #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    #4DC5FF 0%, #4BC0F9 29%, #3EA1D1 50%) top    right  / 50% 50% no-repeat;
+      --orange-gradient:
+        linear-gradient(to bottom right, rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom right  / 50% 50% no-repeat,
+        linear-gradient(to bottom left,  rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) bottom left   / 50% 50% no-repeat,
+        linear-gradient(to top left,     rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    left   / 50% 50% no-repeat,
+        linear-gradient(to top right,    rgba(255,196,167,0.37) 0%, rgba(237,82,4,0.37) 50%) top    right  / 50% 50% no-repeat;
+
+      --font-body:      'Jost', sans-serif;
+      --font-display:   'Limelight', cursive;
+      --font-heading:   'Inder', sans-serif;
+
+      --text-sm:   0.9375rem;
+      --text-lg:   1.5625rem;
+      --text-2xl:  4rem;
+      --text-hero: clamp(2rem, 7vw, 6rem);
+
+      --max-w:  900px;
+      --wide-w: 1100px;
+      --pad-x:  clamp(1rem, 5vw, 2rem);
+      --gap:    clamp(1.5rem, 4vw, 2.5rem);
+
+      --btn-bg:     rgba(77, 197, 255, 0.30);
+      --btn-border: #3EA1D1;
+      --btn-hover:  rgba(255, 136, 77, 0.37);
+    }
+
+    /* ── Base ── */
+    body {
+      background: white;
+      font-family: var(--font-body);
+      font-weight: 400;
+      color: black;
+      line-height: 1.6;
+    }
+
+    /* ── Top Banner with title ── */
+    .banner-top {
+      width: 100%;
+      min-height: clamp(140px, 20vw, 469px);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .banner-top::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.75;
+      background: linear-gradient(135deg, #4DC5FF 0%, #4BC0F9 40%, #3EA1D1 100%);
+      z-index: 0;
+    }
+    .banner-top .page-title,
+    .banner-top .site-title,
+    .banner-top .page-title,
+    .banner-top .banner-top__content,
+    .banner-top .title-card {
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: var(--text-hero);
+      font-weight: 400;
+      text-align: center;
+      line-height: 1.5;
+      padding: clamp(1rem, 3vw, 2rem) var(--pad-x);
+      /* opacity is on parent so title inherits — re-opaque it */
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Compensate for parent opacity:0.75 so text is fully opaque */
+    .banner-top::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0; /* keeps text at full opacity via stacking context */
+    }
+
+    /* ── Bottom Banner ── */
+    .banner-bottom {
+      width: 100%;
+      height: clamp(60px, 10vw, 165px);
+      opacity: 0.75;
+      background: var(--orange-gradient);
+    }
+
+    /* ── Main content ── */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--gap);
+      padding-block: var(--gap);
+    }
+
+    /* ── Section wrapper ── */
+    .section {
+      width: 100%;
+      max-width: var(--max-w);
+      padding-inline: var(--pad-x);
+    }
+
+    .section--wide {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Headings ── */
+    .section-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 6vw, var(--text-2xl));
+      font-weight: 400;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* ── Body text ── */
+    .body-text {
+      font-size: clamp(1rem, 2.5vw, var(--text-lg));
+      line-height: 1.6;
+    }
+    .body-text.justify { text-align: justify; }
+    .body-text.center  { text-align: center; }
+    .body-text p + p   { margin-top: 1.25rem; }
+
+    .caption {
+      font-size: var(--text-sm);
+      text-align: center;
+      line-height: 1.5;
+      max-width: var(--max-w);
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── 3D glasses GIF ── */
+    .glasses-img {
+      width: 100%;
+      max-width: 742px;
+      height: auto;
+      display: block;
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── YouTube iframe ── */
+    .video-wrap {
+      width: 100%;
+      max-width: 560px;
+      padding-inline: var(--pad-x);
+      margin-inline: auto;
+    }
+    .video-wrap .ratio {
+      position: relative;
+      padding-top: 56.25%;
+    }
+    .video-wrap .ratio iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ── Lyrics image — allowed to be wider than normal max-w ── */
+    .lyrics-img {
+      width: 100%;
+      max-width: 1400px;
+      height: auto;
+      display: block;
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Side-by-side still image ── */
+    .still-img {
+      width: 100%;
+      max-width: 1051px;
+      height: auto;
+      display: block;
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+
+    /* ── Nav footer: BACK / NEXT / Go Home ── */
+    .page-nav {
+      width: 100%;
+      max-width: var(--wide-w);
+      padding-inline: var(--pad-x);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    .page-nav__row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .page-nav__label {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 400;
+      line-height: 1.5;
+      flex: 1;
+      text-align: center;
+    }
+    .page-nav__label.left { text-align: left; }
+    .page-nav__label.right { text-align: right; }
+
+    .page-nav__center {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    /* ── Button ── */
+    .button-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+
+      width: clamp(140px, 20vw, 193px);
+      min-height: 72px;
+      padding: 10px 14px;
+      flex-shrink: 0;
+
+      background: var(--btn-bg);
+      border-radius: 35px;
+      outline: 4px solid var(--btn-border);
+      outline-offset: -4px;
+
+      color: black;
+      font-size: clamp(0.9rem, 1.8vw, 1.6875rem);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.4;
+      word-break: break-word;
+
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .button-home:hover {
+      background: var(--btn-hover);
+      transform: scale(1.05);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .page-nav__row {
+        flex-direction: column;
+        align-items: center;
+      }
+      .page-nav__label.left,
+      .page-nav__label.right {
+        text-align: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .button-home { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Top Blue Banner with Page Title ── -->
+  <div class="banner-top">
+    <h1 class="page-title">All Eyes On Me<br />(The Outtakes Version)</h1>
+  </div>
+
+  <main>
+
+    <!-- ── 3D glasses prompt GIF ── -->
+    <img class="glasses-img"
+         src="./images/1-put-on-your-3d-glasses-4-27-2025.gif"
+         alt="Put on your 3D glasses" />
+
+    <!-- ── YouTube embed ── -->
+    <div class="video-wrap">
+      <div class="ratio">
+        <iframe
+          src="https://www.youtube.com/embed/g8e9bKaSKBI"
+          title="All Eyes On Me (The Outtakes Version)"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <!-- ── Lyrics image ── -->
+    <img class="lyrics-img"
+         src="./images/2-all_eyes_on_me_outakes_lyrics-3d_glasses.png"
+         alt="All Eyes On Me Outtakes — designed lyrics for 3D glasses" />
+
+    <!-- ── Recreator's Note heading ── -->
+    <h2 class="section-heading">Recreator's Note</h2>
+
+    <!-- ── Note: first block ── -->
+    <div class="section--wide">
+      <div class="body-text justify">
+        <p>Exactly one year after the original release date of <em>Inside</em> on Netflix,
+        Bo Burnham released "The Inside Outtakes" on YouTube. In it, he shows behind the
+        scenes of the making of <em>Inside</em>, offering more songs/snippets that didn't
+        make the original cut, and an alternative version of "All Eyes On Me," arguably the
+        most notable and important song from <em>Inside</em>.</p>
+
+        <p>My visual representation of lyrics uses formatting to convey the song's textual
+        subject matter and cognitive processes of the viewers.</p>
+
+        <p>The lines of lyrics use Gestalt's principle of Continuity/Continuation to keep
+        lyrics in order, while also displaying them weaving in and out with the other voice's
+        lyrics. The lines also textually represent ocean waves/water mentioned within the
+        lyrics.</p>
+
+        <p><a href="https://www.youtube.com/embed/5XWEVoI40sE" style="color: black;">"All
+        Eyes On Me (The Outtakes Version)" music video</a> is similar to the originally
+        published "All Eyes On Me" from <em>Inside</em> in that Burnham presents himself in
+        duplicate. In the original <em>Inside</em>, most of the video shows Burnham performing
+        in front of a camera, with that live feed projected upon the wall behind him. In "The
+        Outtakes Version," the video includes two frames of Burnham performing side by side
+        (see image below). One is "grungy" with a narrow depth of field (meaning he is out
+        of focus if he moves forwards and backwards); the second is overlaid with a harsh
+        green filter (presumably using an infrared lens) that has altered his appearance,
+        making him look grotesque.</p>
+      </div>
+    </div>
+
+    <!-- ── Side-by-side still image ── -->
+    <img class="still-img"
+         src="./images/3-side_by_side_4.png"
+         alt='Still image from "All Eyes On Me — The Outtakes Version" music video. Left: Grungy Burnham. Right: Grotesque Green Burnham.' />
+
+    <p class="caption">
+      Still image from the "All Eyes On Me — The Outtakes Version" music video.<br />
+      Left — Grungy Burnham. &nbsp; Right — Grotesque Green Burnham.
+    </p>
+
+    <!-- ── Note: second block ── -->
+    <div class="section--wide">
+      <div class="body-text justify">
+        <p>For the first half of the song and video, the two voices sing/appear separately.
+        About halfway through, they sing over top of each other, with the video presenting
+        both frames side by side, causing confusion and disorientation in the listener's
+        ability to understand the lyrics, though each "version" of Burnham sings lines that
+        are mostly from the original song. My lyrics present two colors of text, each with
+        a different font, to connote the two distinct voices: grungy and green.</p>
+
+        <p>I chose orange and cyan as the colors of the lyrics to match the color calibration
+        of traditional Red/Blue 3D movie glasses. (Grungy lyrics are found in cyan, and
+        grotesque green lyrics are in orange.) In doing so, the effect is such that closing
+        one eye cancels out one "set" of lyrics, while closing the other eye cancels the
+        other set. For example, if a viewer closes the "red" eye, which then leaves them
+        looking solely through a blue lens, they can only see the orange lyrics. If they
+        open the "red" eye, but close the "blue" eye, then they see only the cyan lyrics.
+        Shared words in the lyrics are formatted in purple to ensure that both lenses can
+        detect it. In this way, viewers can literally "choose" which voice they follow along
+        with, opting to only "see" one voice at a time. In this way, the choosing of
+        "filters" or the choosing of "what is seen/heard" is a symbolic act (we meet again,
+        J. L. Austin!).</p>
+
+        <p>With both eyes open, the effect is "trippy" or disorienting. In my experience
+        (and others' who have "experienced" my work), my eyes battle for which color of
+        lyrics my brain wants to focus upon. Depending on which lyrics my eyes are actively
+        reading (as opposed to passively seeing), that correlating singing voice becomes
+        clearer and easier to listen to while the other voice fades to the background.
+        However, the act of my eyes literally battling to be the dominant eye that my brain
+        uses to process information causes a sense of fuzziness and confusion that is almost
+        indescribable ("transcendent" is a word one of my friends used to describe her
+        experience), much like the effect the song has on listeners. At one point, my eyes
+        give up fighting each other and start to unfocus. After my eyes relax, the lyrics
+        start to jump off the screen, intertwining not only in 2D (up/down, left/right),
+        but also in 3D, floating front/back from the screen. Slightly moving eyes/head left
+        and right to read along makes this effect even more extreme. At the very end, the
+        last 3 lines are sung in unison, so I used a 3D anaglyph to make those lines
+        literally stand off the screen together.</p>
+
+        <p>I took inspiration from the vinyl records of <em>Inside</em>. The records come
+        encased with red, blue, and green acetate sleeves that cover the jackets (or cases).
+        Photos on the jackets are two (or three)-toned printed so different images appear
+        depending on which sleeve is slipped over the jacket. I wanted to play with this
+        notion that listeners can choose which "filter" they use to view Burnham's work.
+        However, the two simultaneous voices in the song facilitated the need for two filters
+        to be used at once, hence using 3D glasses for a double filter input.</p>
+
+        <p>The waviness of the lines was influenced by the juxtaposing lyrics of the song.
+        This up and down movement mirrors the emotional roller coaster that is <em>Inside</em>.
+        Viewers can be laughing in one segment, then immediately be forced to witness
+        Burnham's devastating existential crisis. The lyrics also mimic words from the song.
+        Burnham mentions the rising level of the ocean, so I wanted the lyrics to look like
+        waves, intertwining together. Not only that, the wave line was meant to simulate the
+        speed and duration that Burnham sings. Using visual attributions to draw listener's
+        attention to tempo and pace, along with movements that represented the content of
+        the lyrics, and what I think is the natural "flow" of rhythm in this song.</p>
+
+        <p>Seeing the duplicitously visualized lyrics, weaving together with red/blue glasses,
+        impels readers to experience disorientation in a supplemental, yet, strangely,
+        harmonious way. In other words, the way in which many experienced the COVID-19
+        pandemic, or experience anxiety/depression, or experience performativity.</p>
+      </div>
+    </div>
+
+    <!-- ── Page navigation: BACK / NEXT / Go Home ── -->
+    <nav class="page-nav" aria-label="Page navigation">
+
+      <!-- BACK / NEXT row -->
+      <div class="page-nav__row">
+        <div style="display:flex; flex-direction:column; align-items:center; gap:0.5rem;">
+          <span class="page-nav__label left">BACK</span>
+          <a href="./bezos2.html" class="button-home">Bezos II</a>
+        </div>
+
+        <div style="display:flex; flex-direction:column; align-items:center; gap:0.5rem;">
+          <span class="page-nav__label right">NEXT</span>
+          <a href="./research_page.html" class="button-home">Research</a>
+        </div>
+      </div>
+
+      <!-- Go Home -->
+      <div class="page-nav__center">
+        <a href="./context_homepage.html" class="button-home">Go Home</a>
+      </div>
+
+    </nav>
+
+  </main>
+
+  <!-- ── Bottom Orange Banner ── -->
+  <div class="banner-bottom"></div>
+
+</body>
+</html>
 
